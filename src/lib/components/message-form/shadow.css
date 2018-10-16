@@ -1,0 +1,20 @@
+form-input {
+	padding: 10px 5px;
+	display: flex;
+}
+
+.result {
+	color: #ff724e;
+	padding: 10px 0px;
+}
+
+input[type=submit] {
+	visibility: collapse;
+	flex-basis: 300px;
+}
+
+form {
+	display: flex;
+    flex-basis: 300px;
+    flex-direction: column;
+}
