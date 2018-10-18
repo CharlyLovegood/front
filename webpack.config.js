@@ -12,6 +12,8 @@ module.exports = {
 		//publicPath: '/static/',
 		filename: '[name]/bundle.js'
 	},
+	devtool: "inline-source-map",
+
 	module: {
 		rules: [
 			{
