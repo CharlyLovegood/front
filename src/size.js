@@ -1,10 +1,9 @@
-var BIT = {name: 'bit', value: 1};
-var BYTE = {name: 'byte', value: 8};
-var KB = {name: 'kilobyte', value: 1024*8};
-var MB = {name: 'megabyte', value: 1024*1024*8};
+var BYTE = {name: 'B', value: 1};
+var KB = {name: 'KB', value: 1024};
+var MB = {name: 'MB', value: 1024*1024};
 
 
-getReadableSize(size){
-	return (size / KB.value);
-}
-console.log(getReadableSize(8));
+function getReadableSize(size) {
+	size = Math.floor(size / KB.value);
+	return (size + ' ' + KB.name);
+};

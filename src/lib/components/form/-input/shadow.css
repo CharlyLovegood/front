@@ -2,6 +2,7 @@ input {
 	border: 0;
 	outline: none;
 	width: calc(100% - 2px);
+	font-size: 28px;
 }
 
 :host {
@@ -10,7 +11,7 @@ input {
 }
 
 img {
-	height: 15px;
+	height: 27px;
 }
 
 button {
