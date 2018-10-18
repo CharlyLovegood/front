@@ -3,9 +3,36 @@
 <head lang="en">
 	<meta charset="UTF-8">
 	<title>Create message</title>
+	<style>
+		.block{
+			    height: 100vh;
+			    margin: 0px 10%;
+			    /* padding: 31px; */
+			    display: flex;
+			    justify-content: center;
+			    position: relative;
+		}
+		nav{
+			position: absolute;
+		    top: 0px;
+		    height: 60px;
+		    background: #863994;
+		    width: 100%;
+		}
+		
+		message-form{
+      		position: absolute;
+		    bottom: 0;
+		    width: 100%;
+		}
+	</style>
 </head>
 <body>
-	<message-form action="/">
-	</message-form>
+	<div class="block">
+		<nav>
+		</nav>
+		<message-form action="/">
+		</message-form>
+	</div>
 </body>
 </html>
