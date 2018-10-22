@@ -4,7 +4,30 @@ import shadowStyles from './shadow.css';
 const slotName = 'message-input';
 
 const template = `
-	<style>${shadowStyles.toString()}</style>
+	<style>
+		form-input {
+			padding: 10px 5px;
+			display: flex;
+		}
+
+		.result {
+			height: 24px;
+			color: #ffb270;
+			padding: 10px 0px;
+		}
+
+		input[type=submit] {
+			visibility: collapse;
+			flex-basis: 300px;
+		}
+
+		form {
+			display: flex;
+			width: 100%;
+		    flex-direction: column;
+		    margin-bottom: 5px;
+		}
+	</style>
 	<form>
 		<div class="result"></div>
 		<form-input name="message_text" placeholder="Сообщение" slot="message-input">
