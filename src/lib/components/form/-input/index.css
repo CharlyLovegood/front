@@ -1,0 +1,12 @@
+.pseudo {
+	visibility: hidden;
+}
+
+message-form {
+	display: flex;
+    justify-content: center;
+}
+img {
+	height: 12px;
+}
+
