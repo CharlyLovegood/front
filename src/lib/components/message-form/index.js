@@ -29,7 +29,6 @@ const template = `
 		}
 	</style>
 	<form>
-		<div class="result"></div>
 		<form-input name="message_text" placeholder="Сообщение" slot="message-input">
 			<span slot="icon"></span>
 		</form-input>

@@ -51,18 +51,34 @@ class MessageBox extends HTMLElement {
 			mesForm: mesForm,
 			input: input,
 			submitButton: submitButton,
-			attachButton: attachButton
+			attachButton: attachButton,
+			forminp: forminp
 		};	
 	}
 
 	_addHandlers () {
+
+		this._elements.forminp.addEventListener('keyup', this._onSubmitEnter.bind(this), true);
 		this._elements.submitButton.addEventListener('click', this._onSubmit.bind(this));
 		this._elements.attachButton.addEventListener('change', this._loadFile.bind(this), false);
 	}
 
+	_onSubmitEnter(event) {
+		if (event.keyCode == 13) {
+			var div = document.createElement('div');
+			if (this._elements.form.elements[0].value) {
+				var text = this._elements.form.elements[0].value;
+				div.innerHTML = '<p>' + text + '</p>';
+				div.className = 'myMes';
+				this.shadowRoot.appendChild(div);
+			}
+			this._scroll();
+		}
+	}
+
+
 	_onSubmit(event) {
 		var div = document.createElement('div');
-		console.log('fsf');
 		if (this._elements.form.elements[0].value) {
 			var text = this._elements.form.elements[0].value;
 			div.innerHTML = '<p>' + text + '</p>';
