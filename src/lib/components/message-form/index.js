@@ -28,8 +28,8 @@ const template = `
 		}
 		}
 	</style>
-	<form>
-		<form-input name="message_text" placeholder="Сообщение" slot="message-input">
+	<form action="http://localhost:3002/upload" method="post">
+		<form-input action="http://localhost:3002/upload" method="post" name="message_text" placeholder="Сообщение" slot="message-input">
 			<span slot="icon"></span>
 		</form-input>
 	</form>

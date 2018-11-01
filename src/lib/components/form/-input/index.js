@@ -50,6 +50,7 @@ const template = `
 
 
 class FormInput extends HTMLElement {
+
 	constructor () {
 		super();
 		const shadowRoot = this.attachShadow({mode: 'open'});
@@ -72,6 +73,7 @@ class FormInput extends HTMLElement {
 	}
 
 	_initElements () {
+		console.log(styles.toString());
 		var hiddenInput = document.createElement('input');
 		var input = this.shadowRoot.querySelector('input');
 		var button = this.shadowRoot.querySelector('button');
