@@ -24,9 +24,29 @@ const template = `
 		    margin-bottom: 10px;
 		    align-self: flex-end;
 		}
+		.status {
+			position: relative;
+		    left: -10px;
+		    top: 0;
+		    display: flex;
+    		align-items: flex-start;
+		}
+		.time {
+			margin: 7px;
+			font-size: 12px;
+    		margin: 8px 0px;
+		}
 	</style>
 	<div class="mesForMe">Are you going to scarborough fair? Parsley, sage, rosemary & thyme. Remember me to one who lives there. She once was a true love of mine</div>
 `;
+
+const mesTempl = `
+	<div>
+	<div class="time"></div>
+		<p></p>
+	</div>
+
+`
 
 class MessageBox extends HTMLElement {
 	constructor () {
@@ -57,46 +77,101 @@ class MessageBox extends HTMLElement {
 	}
 
 	_addHandlers () {
-
-		this._elements.forminp.addEventListener('keyup', this._onSubmitEnter.bind(this), true);
+		this._elements.forminp.addEventListener('keypress', this._onSubmitEnter.bind(this), true);
 		this._elements.submitButton.addEventListener('click', this._onSubmit.bind(this));
-		this._elements.attachButton.addEventListener('change', this._loadFile.bind(this), false);
+		this._elements.attachButton.addEventListener('change', this._loadFileToServer.bind(this), false);
 	}
 
+
 	_onSubmitEnter(event) {
+
+		var now = new Date();
+		var time = now.toDateString();
+
+		console.log('89');
 		if (event.keyCode == 13) {
 			var div = document.createElement('div');
 			if (this._elements.form.elements[0].value) {
 				var text = this._elements.form.elements[0].value;
-				div.innerHTML = '<p>' + text + '</p>';
+				div.innerHTML = '<div class="status">...<p class="time"> ' + time + '</p> </div> <p>' + text + '</p>';
 				div.className = 'myMes';
 				this.shadowRoot.appendChild(div);
 			}
 			this._scroll();
+
+			var formData = new FormData();
+			var text = this._elements.form.elements[0].value;
+			console.log(text)
+			formData.append("text", text)
+			console.log('hy')
+			fetch('http://localhost:3002/upload', {  
+			    method: 'post',   
+			    body: formData
+			}).then(function(response) {
+	        	console.log('done');
+	        	var div = document.querySelector('message-box').shadowRoot.lastElementChild;
+	        	div.innerHTML = '<div class="status">' + '&#10004; <p class="time"> ' + time + '</p> </div> <p>' + text + '</p>';
+	        	return response;
+	        	
+	        })
+	        .catch(function(err){ 
+	        	console.log(err);
+	        	var div = document.querySelector('message-box').shadowRoot.lastElementChild;
+	        	div.innerHTML = '<div class="status">' + '&#10008; <p class="time"> ' + time + '</p> </div> <p>' + text + '</p>';
+	        });
+	        console.log('end')
+
 		}
 	}
 
 
 	_onSubmit(event) {
+		var now = new Date();
+		var time = now.toDateString();
+
+
 		var div = document.createElement('div');
 		if (this._elements.form.elements[0].value) {
 			var text = this._elements.form.elements[0].value;
-			div.innerHTML = '<p>' + text + '</p>';
+			div.innerHTML = '<div class="status">' + '... <p class="time"> ' + time + '</p> </div> <p>' + text + '</p>';
 			div.className = 'myMes';
 			this.shadowRoot.appendChild(div);
 		}
 		this._scroll();
+
+		var formData = new FormData();
+		var text = this._elements.form.elements[0].value;
+		console.log(text)
+		formData.append("text", text)
+
+		fetch('http://localhost:3002/upload', {  
+		    method: 'post',   
+		    body: formData
+		}).then(function(response) {
+          console.log('done');
+          var div = document.querySelector('message-box').shadowRoot.lastElementChild;
+          div.innerHTML = '<div class="status">' + '&#10004; <p class="time"> ' + time + '</p> </div> <p>' + text + '</p>';
+          return response;
+
+        })
+        .catch(function(err){ 
+          console.log(err);
+          var div = document.querySelector('message-box').shadowRoot.lastElementChild;
+	      div.innerHTML = '<div class="status">' + '&#10008; <p class="time"> ' + time + '</p> </div> <p>' + text + '</p>';
+        });
 	}
 
 	_scroll() {
 		this.scrollTop = 9999;
 	}
 
-	_loadFile(evt) {
+
+	_loadFileToServer(evt) {
 		var place = this.shadowRoot;
 		var files = evt.target.files;
 		var reader = new FileReader();
 		var f = files[0];
+
 
 		reader.onload = (function (theFile) {
 			return function(e) {
@@ -110,16 +185,33 @@ class MessageBox extends HTMLElement {
 				}
 				else {
 					var div = document.createElement('div');
-					div.innerHTML = '<p>File: ' + f.name + ', size: ' + f.size + ' Byte.' + '</p>';
+					div.innerHTML = '<div class="status">' + '...' + '</div> <p>File: ' + f.name + ', size: ' + f.size + ' Byte.' + '</p>';
 					div.className = 'myMes';
 					place.appendChild(div);
-
 				}
 			};
 		})(f);
 		reader.readAsDataURL(f);
-	
-		this._scroll();
+
+		var formData = new FormData();
+		formData.append("file", f);
+
+		fetch('http://localhost:3002/upload', {  
+		    method: 'post',   
+		    body: formData
+		}).then(function(response) {
+        	console.log('done');
+        	var div = document.querySelector('message-box').shadowRoot.lastElementChild;
+	    	div.innerHTML = '<div class="status">' + '&#10004;' + '</div> <p>File: ' + f.name + ', size: ' + f.size + ' Byte.' + '</p>';
+        	return response;
+        })
+        .catch(function(err){ 
+        	console.log(err);
+        	var div = document.querySelector('message-box').shadowRoot.lastElementChild;
+	    	div.innerHTML = '<div class="status">' + '&#10008;' + '</div> <p>File: ' + f.name + ', size: ' + f.size + ' Byte.' + '</p>';
+        });
+
 	}
+
 }
 customElements.define('message-box', MessageBox);
