@@ -16,6 +16,7 @@ app.post('/upload', function(req, res) {
         let sampleFile = req.files.file;
 	    var filename = sampleFile.name;
 
+
 		result = new Promise((resolve, reject) => {
 	        sampleFile.mv('./dist/static/' + filename, function (err) {
 	          if (err) reject(err);

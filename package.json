@@ -1,34 +1,32 @@
 {
-  "name": "web",
+  "name": "frontend",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch",
-    "lint": "eslint ./src/app/create/"
+    "start": "npm run build && npm run serve",
+    "serve": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "build": "webpack --config ./webpack.config.js --mode development"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
-    "css-loader": "^1.0.0",
-    "eslint": "^5.7.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "html-loader": "^0.5.5",
+    "css-loader": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.4",
-    "webpack": "^4.22.0",
-    "webpack-cli": "^3.1.2"
+    "style-loader": "^0.23.1",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
     "express": "^4.16.4",
-    "express-fileupload": "^1.0.0"
+    "express-fileupload": "^1.0.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
   }
 }
