@@ -1,0 +1,163 @@
+form-input {
+    padding: 10px 5px;
+    display: flex;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+input[type=submit] {
+    visibility: collapse;
+    flex-basis: 300px;
+}
+
+form {
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.myMes {
+    background: #ffe1e1;
+    padding: 0px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: flex-end;
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mesForMe {
+    background: #ffa084;
+    padding: 0px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: flex-start;
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mesInfo {
+    display: flex;
+
+}
+
+.status {
+    align-self: flex-start;
+    font-size: 12px;
+    margin: 8px;
+}
+
+img {
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: flex-end;
+}
+.status {
+    position: relative;
+    left: -10px;
+    top: 0;
+    display: flex;
+    align-items: flex-start;
+}
+.time {
+    margin: 7px;
+    font-size: 12px;
+    margin: 8px 0px;
+}
+input {
+    width: 100%;
+    font-size: 28px;
+}
+
+:host {
+    display: inline-block;
+    border: 1px solid rgba(25, 25, 25, 0.32);
+}
+
+.app {
+    display: flex;
+}
+
+img.imgButton{
+    height: 27px;
+    width: 27px;
+}
+
+button {
+    padding: 4px 5px 0px 8px;
+    background: white;
+    border: none;
+}
+
+.attachButton {
+    margin: 5px 5px 0px 15px;
+}
+.attachButton:focus {
+}
+
+img {
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: flex-end;
+}
+.status {
+    position: relative;
+    left: -10px;
+    top: 0;
+    display: flex;
+    align-items: flex-start;
+}
+.time {
+    margin: 7px;
+    font-size: 12px;
+    margin: 8px 0px;
+}
+
+body {
+    margin: 8px 10%;
+    height: 100vh;
+}
+.block{
+    height: 100%;
+    margin: 0px 10%;
+    display: flex;
+    flex-direction: column;    
+}
+nav{
+    flex-basis: 80px;
+    background: #ffa084;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+message-form{
+    flex-basis: 120px;
+    width: 100%;
+}
+
+message-box {
+    flex-basis: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.content {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    flex-basis: 100%;
+}
+.avatar {
+    width: 57px;
+    margin: 5px;
+}
