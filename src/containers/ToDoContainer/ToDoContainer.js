@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Messages from '../../components/Messages/Messages'
-import { Route } from 'react-router-dom';
-import MessagePage from '../../components/Messages/MessagePage/MessagePage';
 
 
 class MessagesContainer extends Component {
@@ -18,7 +16,7 @@ class MessagesContainer extends Component {
     this.handleFileUpload = this.handleFileUpload.bind(this);
 
     this.fillForm = this.fillForm.bind(this);
-    this.setState({chat_id: Number(props.id)});
+    this.state = {chat_id: Number(props.id), value: ''};
     var mes = MessagesContainer.createMessages(props.id);
     this.state = ({messages: mes})
   };
@@ -27,7 +25,6 @@ class MessagesContainer extends Component {
     var now = new Date();
     var time = now.toDateString();
 
-    var chat_id = id;
     return new Array(5).fill(null).map((item, index) => {
       return {
         text: "newMes from chat#" + id,
@@ -41,15 +38,15 @@ class MessagesContainer extends Component {
   };
 
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChange(value) {
+    this.setState({value});
   };
 
 
   handleSubmit(event) {
     event.preventDefault();
 
-    if (this.state.value != '') {
+    if (this.state.value !== '') {
       var now = new Date();
       var time = now.toDateString();
 
@@ -96,7 +93,7 @@ class MessagesContainer extends Component {
 
     var extension = file.name.split('.').pop().toLowerCase();
         
-    if (extension == 'png' || extension == 'jpg') {
+    if (extension === 'png' || extension === 'jpg') {
       MessagesContainer.readFile(file).then( function(resultic) {
         newPack = {
           text: '',
@@ -154,16 +151,16 @@ class MessagesContainer extends Component {
         </div>
         <message-form>
           <form  id="MesForm" onSubmit={this.handleSubmit}>
-            <input type="text" onSubmit={this.handleSubmit} value={this.state.value} onChange={this.handleChange} placeholder="Сообщение" />
+            <input type="text" onSubmit={this.handleSubmit} value={this.state.value || ''} onChange={e => this.handleChange(e.target.value)} placeholder="Сообщение" />
             <button id="submit">
-              <img className="imgButton" src="https://icon-icons.com/icons2/933/PNG/512/send-button_icon-icons.com_72565.png"></img>
+              <img alt="" className="imgButton" src="https://icon-icons.com/icons2/933/PNG/512/send-button_icon-icons.com_72565.png"></img>
             </button>
             <label htmlFor="attach" className="attachButton">
-              <img className="imgButton" src="https://cdn.icon-icons.com/icons2/933/PNG/512/attachment-clip_icon-icons.com_72870.png"></img>
+              <img alt="" className="imgButton" src="https://cdn.icon-icons.com/icons2/933/PNG/512/attachment-clip_icon-icons.com_72870.png"></img>
             </label>
             <input type="file" style={{display: 'none'}} onChange={this.handleFileUpload} id="attach"/>
             <button id="geoposition" onClick={this.fillForm}>
-              <img className="imgButton" src="https://cdn4.iconfinder.com/data/icons/contact-and-address-1/32/contact-05-512.png"></img>
+              <img alt="" className="imgButton" src="https://cdn4.iconfinder.com/data/icons/contact-and-address-1/32/contact-05-512.png"></img>
             </button>
           </form>
         </message-form>
