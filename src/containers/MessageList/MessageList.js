@@ -5,6 +5,10 @@ import * as actions from '../../store/actions'
 import { withRouter } from "react-router-dom";
 import Emoji from './../../components/Emoji/Emoji';
 
+
+
+import workerCode from './sharedWorker';
+
 function getCookie(name) {
 	var matches = document.cookie.match(new RegExp(
 	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -19,9 +23,44 @@ class MessageList extends Component {
 
 		this.state = {
 		    data: [],
-		    user: 0
+		    user: 0,
+		    worker: this.getSharedWorker()
 		};
+		this.state.worker.then((worker) => {
+			worker.port.postMessage('message');
+		});
+
 	}
+
+	onMessage(message) {
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(message);
+		});
+		this.setState({messages: this.state.messages.concat(message)});
+	}
+
+	getSharedWorker () {
+		const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+		return new Promise((res, rej) => {
+			const reader = new FileReader();
+			reader.addEventListener('loadend', (event) => {
+			const worker = new SharedWorker(event.target.result);
+			worker.port.addEventListener('message', this.onWorkerMessageList.bind(this));
+			worker.port.start();
+			window.addEventListener('beforeunload', () => {
+				worker.port.postMessage('disconnect');
+			});
+			res(worker);
+			});
+			reader.addEventListener('error', rej);
+			reader.readAsDataURL(workerFile);
+		});
+	}
+
+	onWorkerMessageList (event) {
+		console.log(event.data);
+	}
+
 
 	componentDidMount() {
 
@@ -114,17 +153,13 @@ class MessageList extends Component {
 	}
 
 	handleEmoji(txt) {
-		var start = txt.indexOf("::/");
-		if (txt.indexOf("::/") === -1) {
+		if (txt.indexOf("::") === -1) {
 			return {__html: txt};
 		}
-		if (txt.indexOf("::/") !== -1) {
-			var end = txt.indexOf("/::");
-			var strForReplace = txt.substring(start, end+3);
-			var str = txt.substring(start+3, end);
-			
-			var newLine = txt.replace(strForReplace, '<i class="emojiCode"></i>'.replace('emojiCode', str));
-			return {__html: newLine};
+		if (txt.indexOf("::") !== -1) {
+			var re = /::(\w+)::/gi;
+			var newstr = txt.replace(re, '<i class="$1"></i>');			
+			return {__html: newstr};
 		}
 	}
 	

@@ -12,8 +12,7 @@ import Profile from './containers/Profile/Profile';
 import {connect} from 'react-redux';
 import * as actions from './store/actions';
 
-
-import  { Redirect } from 'react-router-dom'
+import  { Redirect } from 'react-router-dom';
 
 
 function getCookie(name) {
@@ -61,11 +60,7 @@ function deleteCookie(name) {
 
 
 class App extends Component {
-
   render() {
-    // deleteCookie('token');
-    // deleteCookie('userID');
-
     var userId = getCookie('userID');
     console.log(userId);
 

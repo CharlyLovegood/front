@@ -11,7 +11,6 @@ import chatReducer from './store/reducers/chat';
 
 import thunk from 'redux-thunk';
 
-import serviceWorker from './serviceWorker'
 
 
 const rootReducer = combineReducers({
@@ -28,5 +27,3 @@ const store = createStore(rootReducer, composeEnhancers(
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
-
-serviceWorker()

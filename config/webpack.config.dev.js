@@ -174,6 +174,20 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
+
+
+      // {
+      //   test: /\.worker\.js$/,
+      //   use: [
+      //     { 
+      //       loader: 'worker-loader',
+      //       options: { publicPath: '/workers/' },
+      //     }
+      //   ],
+      // },
+
+      
+      
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
 
@@ -202,6 +216,13 @@ module.exports = {
           // "url" loader works like "file" loader except that it embeds assets
           // smaller than specified limit in bytes as data URLs to avoid requests.
           // A missing `test` is equivalent to a match.
+          {
+            test: /\.worker\.js$/,
+            include: paths.appSrc,
+            use: {
+              loader: 'worker-loader'
+            }
+          },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),

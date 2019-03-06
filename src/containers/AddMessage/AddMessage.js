@@ -154,7 +154,7 @@ class AddMessage extends Component {
   handleEmojiClick = (emojiCode) => {
     console.log('EMOJI----------------'+emojiCode);
     this.setState({emojiWasMentioned: true});
-    this.setState({value: this.state.value + "::/" + emojiCode + "/::"})
+    this.setState({value: this.state.value + "::" + emojiCode + "::"})
     
   };
 
