@@ -5,6 +5,7 @@ import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
 import SidebarComponent from './../../components/SidebarComponent/SidebarComponent';
 
+import workerCode from '../sharedWorker';
 
 function getCookie(name) {
 	var matches = document.cookie.match(new RegExp(
@@ -21,61 +22,66 @@ class Sidebar extends Component {
 		super(props);
 
 		this.state = {
-		    data: []
+		    data: [],
+		    worker: this.getSharedWorker()
 		};
 	};
 
+	getSharedWorker () {
+		const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+		return new Promise((res, rej) => {
+			const reader = new FileReader();
+			reader.addEventListener('loadend', (event) => {
+			const worker = new SharedWorker(event.target.result);
+			worker.port.addEventListener('message', this.onWorkerList.bind(this));
+			worker.port.start();
+			window.addEventListener('beforeunload', () => {
+				worker.port.postMessage('disconnect');
+			});
+			res(worker);
+			});
+			reader.addEventListener('error', rej);
+			reader.readAsDataURL(workerFile);
+		});
+	}
+
+	onWorkerList (event) {
+		console.log(event.data);
+
+		switch (event.data.retData) {
+			case 'users_list':
+				console.log('USERS LIST');
+				event.data.list.map(name => this.props.usersList(name[2], name[0]))
+				break;
+			case 'chats_list':
+				console.log('Chats LIST');
+				event.data.list.map(dat => this.props.chatsList(dat[1], dat[0]));
+				break;
+			default:
+				console.log('empty');
+				break;
+		}
+	}
+
 	componentDidMount() {
-		var data = {
-			jsonrpc: '2.0', 
-			method: 'search_users', 
-			params: {}, 
-			id: '1',
-		};
-
-		var request = {
-		    method: 'POST',
-		    body: JSON.stringify(data),
-		    headers: {
-				'Access-Control-Allow-Origin':'*',
-				"Content-Type": "application/json",
-			},
-
-		};
-
-		fetch('http://127.0.0.1:5000/api',request)
-				.then(function(response)  {
-					return response.json();
-				})
-				.then(data => data.map(name => this.props.usersList(name[2], name[0])))
-				.then(console.log(this.props.usr.users))
-				
-
 		var userId = getCookie('userID');
 
-		var data = {
-				jsonrpc: '2.0', 
-				method: 'search_chats', 
-				params: {"user_id": userId,"topic": ""}, 
-				id: '1',
-		};
+		var req1 = {
+			userId: userId,
+			reqData: 'users_list'
+		}
 
-		var request = {
-		    method: 'POST',
-		    body: JSON.stringify(data),
-		    headers: {
-				'Access-Control-Allow-Origin':'*',
-				"Content-Type": "application/json",
-			},
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req1);
+		});
 
-		};
-
-		fetch('http://127.0.0.1:5000/api',request)
-				.then(function(response)  {
-					return response.json();
-				})
-				.then(data => data.map((dat) => this.props.chatsList(dat[1], dat[0])))
-				.then(console.log(this.props.cht.chats))
+		var req2 = {
+			userId: userId,
+			reqData: 'chats_list'
+		}
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req2);
+		});
 	}
 
 

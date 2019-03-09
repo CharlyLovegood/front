@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import ProfileCreateChatComponent from './../../components/ProfileCreateChatComponent/ProfileCreateChatComponent';
 
 
+import workerCode from '../sharedWorker';
+
 function getCookie(name) {
 	var matches = document.cookie.match(new RegExp(
 	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -14,112 +16,98 @@ function getCookie(name) {
 }
 
 
-class MessageList extends Component {
+class Profile extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 		    data: [],
-		    user: 0,
-		    value: ''
+		    value: '',
+		    worker: this.getSharedWorker()
 		};
 	}
 
+	getSharedWorker () {
+		const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+		return new Promise((res, rej) => {
+			const reader = new FileReader();
+			reader.addEventListener('loadend', (event) => {
+			const worker = new SharedWorker(event.target.result);
+			worker.port.addEventListener('message', this.onWorkerList.bind(this));
+			worker.port.start();
+			window.addEventListener('beforeunload', () => {
+				worker.port.postMessage('disconnect');
+			});
+			res(worker);
+			});
+			reader.addEventListener('error', rej);
+			reader.readAsDataURL(workerFile);
+		});
+	}
+
+	onWorkerList (event) {
+		console.log(event.data);
+
+		switch (event.data.retData) {
+			case 'user_info':
+				console.log(event.data);
+				event.data.list.map((dat) => this.setState({data: [dat[0], dat[2]]}))
+				break;
+			default:
+				console.log('empty');
+				break;
+		}
+	}
+
+
     handleChange(event) {
-      console.log(event.target.value);
-      this.setState({value: event.target.value}) 
-    };
+	    console.log(event.target.value);
+	      this.setState({value: event.target.value}) 
+	    };
+
 
 	componentDidMount() {
 		console.log(this.props.match.params.user_id);
-		var data = {
-				jsonrpc: '2.0', 
-				method: 'get_user_info', 
-				params: {"user_id": this.props.match.params.user_id}, 
-				id: '1',
-		};
-
-		var request = {
-		    method: 'POST',
-		    body: JSON.stringify(data),
-		    headers: {
-				'Access-Control-Allow-Origin':'*',
-				"Content-Type": "application/json",
-			},
-
-		};
-
-		fetch('http://127.0.0.1:5000/api',request)
-				.then(function(response)  {
-					return response.json();
-				})
-				.then(data => {
-					console.log(data);
-					data.map((dat) => this.setState({data: [dat[0], dat[2]]}));
-					
-				})
+		var req = {
+			userId: this.props.match.params.user_id,
+			reqData: 'get_user_info'
+		}
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req);
+		});
 				
 	}	
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.props.match.params.user_id !== prevProps.match.params.user_id) {
-			console.log(this.props.match.params.user_id);
-			console.log(prevProps.match.params.user_id);
-			var data = {
-					jsonrpc: '2.0', 
-					method: 'get_user_info', 
-					params: {"user_id": this.props.match.params.user_id}, 
-					id: '1',
-			};
-
-			var request = {
-			    method: 'POST',
-			    body: JSON.stringify(data),
-			    headers: {
-					'Access-Control-Allow-Origin':'*',
-					"Content-Type": "application/json",
-				},
-			};
-
-			fetch('http://127.0.0.1:5000/api',request)
-					.then(function(response)  {
-						return response.json();
-					})
-					.then(data => {
-						console.log(data);
-						data.map((dat) => this.setState({data: [dat[0], dat[2]]}));
-					})	
+			var req = {
+				userId: this.props.match.params.user_id,
+				reqData: 'get_user_info'
+			}
+			this.state.worker.then((worker) => {
+				worker.port.postMessage(req);
+			});
 		}	
 	}
+
 
 	handleCreateChat(event) {
 		if (this.state.value !== '') {
 			event.preventDefault();
 			console.log(this.state.value);
-			var data = {
-					jsonrpc: '2.0', 
-					method: 'create_pers_chat', 
-					params: {"user_id_reciever": this.props.match.params.user_id, "user_id_sender": getCookie('userID'), "topic": this.state.value}, 
-					id: '1',
-			};
+			var userId = getCookie('userID');
 
+			var req1 = {
+				topic: this.state.value,
+				userIdReciever: userId,
+				userIdSender: this.props.match.params.user_id,
+				reqData: 'create_chat'
+			}
 
-			var request = {
-			    method: 'POST',
-			    body: JSON.stringify(data),
-			    headers: {
-					'Access-Control-Allow-Origin':'*',
-					"Content-Type": "application/json",
-				},
-			};
+			this.state.worker.then((worker) => {
+				worker.port.postMessage(req1);
+			});
 
-			fetch('http://127.0.0.1:5000/api',request)
-					.then(function(response)  {
-						return response.json();
-					})
-					.then(data => {
-						console.log(data);
-					})
 			this.setState({value: ''});		
 		}
 	}
@@ -148,4 +136,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MessageList));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

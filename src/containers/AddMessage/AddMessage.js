@@ -7,6 +7,9 @@ import BrowserSprite from 'svg-baker-runtime/src/browser-sprite';
 import globalSprite from 'svg-sprite-loader/runtime/sprite';
 import EmojiViewer from '../EmojiViewer/EmojiViewer'
 
+import workerCode from '../sharedWorker';
+
+
 
 function getCookie(name) {
   var matches = document.cookie.match(new RegExp(
@@ -21,8 +24,27 @@ class AddMessage extends Component {
   state = {
     value: '',
     showEmojiViewer: false,
-    emojiWasMentioned: false
+    emojiWasMentioned: false,
+    worker: this.getSharedWorker()
   };
+
+  getSharedWorker () {
+    const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.addEventListener('loadend', (event) => {
+      const worker = new SharedWorker(event.target.result);
+      worker.port.start();
+      window.addEventListener('beforeunload', () => {
+        worker.port.postMessage('disconnect');
+      });
+      res(worker);
+      });
+      reader.addEventListener('error', rej);
+      reader.readAsDataURL(workerFile);
+    });
+  }
+
 
   handleChange(event) {
     console.log(event.target.value);
@@ -47,35 +69,25 @@ class AddMessage extends Component {
 
 
   handleSubmit(event) {
-    console.log('submit');
     console.log(this.props.match.params.chat_id);
-
     event.preventDefault();
     console.log(this.state.value);
  
     if (this.state.value !== '' && this.state.emojiWasMentioned === false) {
       var userId = getCookie('userID');
 
-      var data = {
-          jsonrpc: '2.0', 
-          method: 'create_message', 
-          params: {"user_id_sender": userId, "chat_id": this.props.match.params.chat_id, "content": this.state.value}, 
-          id: '1',
-      };
+      var req = {
+        userId: userId,
+        txt: this.state.value,
+        chatId: this.props.match.params.chat_id,
+        reqData: 'post_message'
+      }
 
-      var request = {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-          'Access-Control-Allow-Origin':'*',
-          "Content-Type": "application/json",
-        },
-      };
 
-      fetch('http://127.0.0.1:5000/api',request)
-          .then(function(response)  {
-            console.log(response);
-          })
+      this.state.worker.then((worker) => {
+        worker.port.postMessage(req);
+      });
+
       console.log(this.state.value);
       this.props.AddMessage(this.state.value, 'Me', 63, "text", null);
       this.setState({value: ''});
