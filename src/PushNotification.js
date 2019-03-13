@@ -1,0 +1,3 @@
+CURL REQUES TO CHECK PUSH notifications
+
+curl -X POST -H "Authorization:key=AAAAXo6yJcI:APA91bEjCkyFAgUPcLwZrFLtjuPXY2QriiYPo0oKLaSVECllZEMc-vT68QEhWzO5ENcE1-TBcXRYv9FVDqQrPrIs8nC-Lu8ywelSP9D1skQt5i8aFDVIRtDBbrFJqr_D24-QCu1oS2LH" -H "Content-Type: application/json" -d '{"notification": {"title": "Firebase","body": "Firebase is awesome","click_action": "http://localhost:3000/","icon": "http://url-to-an-icon/icon.png"},"to": "ceQrKOS2dpA:APA91bH7WMq4_HwA0Gq2NrfmQ7ixe3AkurX4oDLBM--C__54bNzBK8-_Ck_iswLfLsNcN89rbP24E3goEIq6Z_Rm4YAMUnKdSl7OGhitfyfUz10qgLZ-_79Ug0eL8izlIqiFNuG3c34V"}' https://fcm.googleapis.com/fcm/send

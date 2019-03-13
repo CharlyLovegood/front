@@ -47,15 +47,14 @@ class Sidebar extends Component {
 
 	onWorkerList (event) {
 		console.log(event.data);
-
 		switch (event.data.retData) {
 			case 'users_list':
 				console.log('USERS LIST');
-				event.data.list.map(name => this.props.usersList(name[2], name[0]))
+				event.data.list.map(name => this.props.usersList(name.user_id, name.nick))
 				break;
 			case 'chats_list':
 				console.log('Chats LIST');
-				event.data.list.map(dat => this.props.chatsList(dat[1], dat[0]));
+				event.data.list.map(dat => this.props.chatsList(dat.chat_id, dat.topic));
 				break;
 			default:
 				console.log('empty');
