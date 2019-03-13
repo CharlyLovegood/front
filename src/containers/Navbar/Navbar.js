@@ -60,7 +60,7 @@ class Navbar extends Component {
         <p></p>
         <p>{this.props.usr.currentUser.userName}</p>
           <div className="dropdown-menu">
-            <img alt="" className="menu-label" src="https://cdn0.iconfinder.com/data/icons/web-kit/100/Web-18-512.png" />
+            <img alt="" className="menu-label" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png" />
             <div className="menu-list">
               <Link to='/chats'>Chats</Link>
               <Link to='/users'>Users</Link>

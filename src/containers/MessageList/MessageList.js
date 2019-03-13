@@ -47,14 +47,15 @@ class MessageList extends Component {
 
 	onWorkerMessageList (event) {
 		if (event.data.retData === 'messages_list') {
+			console.log(event.data)
 			event.data.list.map(mes => {
-				if (mes[4] == getCookie('userID')) {
+				if (mes.author == getCookie('userID')) {
 					var reciever = 'Me';
 				}
 				else {
 					var reciever = "ForMe";
 				}
-				this.props.AddMessage(mes[0], reciever, this.props.match.params.chat_id, null, null, mes[5])
+				this.props.AddMessage(mes.content, reciever, this.props.match.params.chat_id, null, null, mes.added_at)
 			});
 		}
 	}

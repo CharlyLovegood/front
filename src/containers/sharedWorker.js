@@ -148,6 +148,7 @@ export default ((self) => {
 									retData: 'users_list',
 									list: data
 								};
+								console.log(data)
 								port.postMessage(answ);
 								console.log(answ);
 							})

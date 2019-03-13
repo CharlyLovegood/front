@@ -50,8 +50,9 @@ class Profile extends Component {
 
 		switch (event.data.retData) {
 			case 'user_info':
-				console.log(event.data);
-				event.data.list.map((dat) => this.setState({data: [dat[0], dat[2]]}))
+				console.log('hhhhhh========')
+				console.log(event.data.list);
+				this.setState({data: [event.data.list.name, event.data.list.user_id]})
 				break;
 			default:
 				console.log('empty');
