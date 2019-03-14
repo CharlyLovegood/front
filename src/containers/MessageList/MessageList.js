@@ -63,6 +63,7 @@ class MessageList extends Component {
 
 
 	componentDidMount() {
+		this.props.RemoveMessage()
 		let req1 = {
 			chatId: this.props.match.params.chat_id,
 			reqData: 'get_messages'
