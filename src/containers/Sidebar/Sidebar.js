@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import  from './../../components/Avatar/Avatar';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
@@ -8,7 +7,7 @@ import SidebarComponent from './../../components/SidebarComponent/SidebarCompone
 import workerCode from '../sharedWorker';
 
 function getCookie(name) {
-	var matches = document.cookie.match(new RegExp(
+	let matches = document.cookie.match(new RegExp(
 	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
 	));
 	return matches ? decodeURIComponent(matches[1]) : undefined;
@@ -32,13 +31,13 @@ class Sidebar extends Component {
 		return new Promise((res, rej) => {
 			const reader = new FileReader();
 			reader.addEventListener('loadend', (event) => {
-			const worker = new SharedWorker(event.target.result);
-			worker.port.addEventListener('message', this.onWorkerList.bind(this));
-			worker.port.start();
-			window.addEventListener('beforeunload', () => {
-				worker.port.postMessage('disconnect');
-			});
-			res(worker);
+				const worker = new SharedWorker(event.target.result);
+				worker.port.addEventListener('message', this.onWorkerList.bind(this));
+				worker.port.start();
+				window.addEventListener('beforeunload', () => {
+					worker.port.postMessage('disconnect');
+				});
+				res(worker);
 			});
 			reader.addEventListener('error', rej);
 			reader.readAsDataURL(workerFile);
@@ -46,26 +45,22 @@ class Sidebar extends Component {
 	}
 
 	onWorkerList (event) {
-		console.log(event.data);
 		switch (event.data.retData) {
 			case 'users_list':
-				console.log('USERS LIST');
 				event.data.list.map(name => this.props.usersList(name.user_id, name.nick))
 				break;
 			case 'chats_list':
-				console.log('Chats LIST');
 				event.data.list.map(dat => this.props.chatsList(dat.chat_id, dat.topic));
 				break;
 			default:
-				console.log('empty');
 				break;
 		}
 	}
 
 	componentDidMount() {
-		var userId = getCookie('userID');
+		let userId = getCookie('userID');
 
-		var req1 = {
+		let req1 = {
 			userId: userId,
 			reqData: 'users_list'
 		}
@@ -74,7 +69,7 @@ class Sidebar extends Component {
 			worker.port.postMessage(req1);
 		});
 
-		var req2 = {
+		let req2 = {
 			userId: userId,
 			reqData: 'chats_list'
 		}
@@ -88,46 +83,46 @@ class Sidebar extends Component {
     	console.log(this.props.usr.users)
 	    return (
 			<aside id="sidebar" className="sidebar">
-			    	{this.props.match.params.view == "chats" ?
-			    		<h1>Chats</h1>
-			    	:
-			    		<h1>Users</h1>
-			    	}
+		    	{this.props.match.params.view == "chats" ?
+		    		<h1>Chats</h1>
+		    	:
+		    		<h1>Users</h1>
+		    	}
 
-			    	{this.props.match.params.view == "chats" ? 
-				    	this.props.cht.chats.map(chat => (
-				                <Link key={chat.id} to={"/chats/chat_id=" + (chat.id)}>
-					                <SidebarComponent
-					                    {...chat}
-					                />
-				                </Link>
-				        ))
-			        :
-				    	this.props.usr.users.map(user => (
-				                <Link key={user.userId} to={"/users/user_id=" + (user.userId)}>
-					                <SidebarComponent
-					                    {...user}
-					                />
-				                </Link>
-				        ))
-			    	}
+		    	{this.props.match.params.view == "chats" ? 
+			    	this.props.cht.chats.map(chat => (
+			                <Link key={chat.id} to={"/chats/chat_id=" + (chat.id)}>
+				                <SidebarComponent
+				                    {...chat}
+				                />
+			                </Link>
+			        ))
+		        :
+			    	this.props.usr.users.map(user => (
+			                <Link key={user.userId} to={"/users/user_id=" + (user.userId)}>
+				                <SidebarComponent
+				                    {...user}
+				                />
+			                </Link>
+			        ))
+		    	}
 			</aside>
 	    );
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return  {
-    usersList: (userId, name) => dispatch(actions.usersList(userId, name)),
-    chatsList: (id, topic) => dispatch(actions.chatList(id, topic))
-  }
+    return  {
+        usersList: (userId, name) => dispatch(actions.usersList(userId, name)),
+        chatsList: (id, topic) => dispatch(actions.chatList(id, topic))
+    }
 };
 
 const mapStateToProps = state => {
-  return {
-    usr: state.usr,
-    cht: state.cht
-  }
+    return {
+        usr: state.usr,
+        cht: state.cht
+    }
 };
 
 

@@ -9,7 +9,7 @@ import ProfileCreateChatComponent from './../../components/ProfileCreateChatComp
 import workerCode from '../sharedWorker';
 
 function getCookie(name) {
-	var matches = document.cookie.match(new RegExp(
+	let matches = document.cookie.match(new RegExp(
 	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
 	));
 	return matches ? decodeURIComponent(matches[1]) : undefined;
@@ -32,13 +32,13 @@ class Profile extends Component {
 		return new Promise((res, rej) => {
 			const reader = new FileReader();
 			reader.addEventListener('loadend', (event) => {
-			const worker = new SharedWorker(event.target.result);
-			worker.port.addEventListener('message', this.onWorkerList.bind(this));
-			worker.port.start();
-			window.addEventListener('beforeunload', () => {
-				worker.port.postMessage('disconnect');
-			});
-			res(worker);
+				const worker = new SharedWorker(event.target.result);
+				worker.port.addEventListener('message', this.onWorkerList.bind(this));
+				worker.port.start();
+				window.addEventListener('beforeunload', () => {
+					worker.port.postMessage('disconnect');
+				});
+				res(worker);
 			});
 			reader.addEventListener('error', rej);
 			reader.readAsDataURL(workerFile);
@@ -46,30 +46,24 @@ class Profile extends Component {
 	}
 
 	onWorkerList (event) {
-		console.log(event.data);
-
 		switch (event.data.retData) {
 			case 'user_info':
-				console.log('hhhhhh========')
-				console.log(event.data.list);
 				this.setState({data: [event.data.list.name, event.data.list.user_id]})
 				break;
 			default:
-				console.log('empty');
 				break;
 		}
 	}
 
 
     handleChange(event) {
-	    console.log(event.target.value);
-	      this.setState({value: event.target.value}) 
-	    };
+	    this.setState({value: event.target.value}) 
+	};
 
 
 	componentDidMount() {
 		console.log(this.props.match.params.user_id);
-		var req = {
+		let req = {
 			userId: this.props.match.params.user_id,
 			reqData: 'get_user_info'
 		}
@@ -81,7 +75,7 @@ class Profile extends Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.props.match.params.user_id !== prevProps.match.params.user_id) {
-			var req = {
+			let req = {
 				userId: this.props.match.params.user_id,
 				reqData: 'get_user_info'
 			}
@@ -95,10 +89,9 @@ class Profile extends Component {
 	handleCreateChat(event) {
 		if (this.state.value !== '') {
 			event.preventDefault();
-			console.log(this.state.value);
-			var userId = getCookie('userID');
+			let userId = getCookie('userID');
 
-			var req1 = {
+			let req1 = {
 				topic: this.state.value,
 				userIdReciever: userId,
 				userIdSender: this.props.match.params.user_id,
@@ -118,7 +111,7 @@ class Profile extends Component {
 		    <section id="profile">		       
 		        {this.state.data[0]} 
 		        <ProfileCreateChatComponent value={this.state.value} handleCreateChat={(event) => this.handleCreateChat(event)} 
-		        													handleChange={(event) => this.handleChange(event)}/>
+		        													 handleChange={(event) => this.handleChange(event)}/>
 		    </section>
 		);
 	};

@@ -10,10 +10,6 @@ import Emoji from './../../components/Emoji/Emoji';
 
 
 class EmojiViewer extends Component {
-	componentDidMount() {
-
-	}	
-
 	render() {
 		return(
 			<section id="emoji-viewer">
