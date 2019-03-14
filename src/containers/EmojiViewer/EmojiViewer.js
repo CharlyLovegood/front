@@ -2,18 +2,11 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 
-import BrowserSprite from 'svg-baker-runtime/src/browser-sprite';
-import globalSprite from 'svg-sprite-loader/runtime/sprite';
-
 import Emoji from './../../components/Emoji/Emoji';
 
 
 
 class EmojiViewer extends Component {
-	componentDidMount() {
-
-	}	
-
 	render() {
 		return(
 			<section id="emoji-viewer">

@@ -4,10 +4,8 @@ export default ((self) => {
 		const port = event.source;
 		ports.push(port);
 		port.addEventListener('message', (event) => {
-			console.log(event.data);
 			switch (event.data.reqData) {
 				case 'get_messages':
-					console.log('MESSAGES!')
 					var data = {
 						jsonrpc: '2.0', 
 						method: 'messages_list_by_chart', 
@@ -36,13 +34,9 @@ export default ((self) => {
 									list: data
 								};
 								port.postMessage(answ);
-								console.log(answ);
-								// port.postMessage(data);
 							})
-
+					break;
 				case 'create_chat':
-					
-					console.log(event.data)
 					var data = {
 							jsonrpc: '2.0', 
 							method: 'create_pers_chat', 
@@ -67,7 +61,6 @@ export default ((self) => {
 								console.log(data);
 							})	
 					break;					
-
 				case 'get_user_info':
 					var data = {
 							jsonrpc: '2.0', 
@@ -90,16 +83,14 @@ export default ((self) => {
 								return response.json();
 							})
 							.then(data => {
-								console.log(data);
 								var answ = {
 									retData: 'user_info',
 									list: data
 								};
 								port.postMessage(answ);
-								console.log(answ);
 							})	
+					break;
 				case 'post_message':
-					console.log('create message')
 					var data = {
 				          jsonrpc: '2.0', 
 				          method: 'create_message', 
@@ -120,7 +111,7 @@ export default ((self) => {
 				          .then(function(response)  {
 				            console.log(response);
 				          })
-
+				    break;      
 				case 'users_list':
 					var data = {
 						jsonrpc: '2.0', 
@@ -149,7 +140,6 @@ export default ((self) => {
 									list: data
 								};
 								port.postMessage(answ);
-								console.log(answ);
 							})
 					break;
 				case 'chats_list':
@@ -183,7 +173,6 @@ export default ((self) => {
 							});
 					break;
 				default:
-					console.log('empty req data');
 					break;
 			}
 			if (event.data === 'disconnect') {

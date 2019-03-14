@@ -8,7 +8,7 @@ import Emoji from './../../components/Emoji/Emoji';
 import workerCode from '../sharedWorker';
 
 function getCookie(name) {
-	var matches = document.cookie.match(new RegExp(
+	let matches = document.cookie.match(new RegExp(
 	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
 	));
 	return matches ? decodeURIComponent(matches[1]) : undefined;
@@ -32,13 +32,13 @@ class MessageList extends Component {
 		return new Promise((res, rej) => {
 			const reader = new FileReader();
 			reader.addEventListener('loadend', (event) => {
-			const worker = new SharedWorker(event.target.result);
-			worker.port.addEventListener('message', this.onWorkerMessageList.bind(this));
-			worker.port.start();
-			window.addEventListener('beforeunload', () => {
-				worker.port.postMessage('disconnect');
-			});
-			res(worker);
+				const worker = new SharedWorker(event.target.result);
+				worker.port.addEventListener('message', this.onWorkerMessageList.bind(this));
+				worker.port.start();
+				window.addEventListener('beforeunload', () => {
+					worker.port.postMessage('disconnect');
+				});
+				res(worker);
 			});
 			reader.addEventListener('error', rej);
 			reader.readAsDataURL(workerFile);
@@ -47,21 +47,24 @@ class MessageList extends Component {
 
 	onWorkerMessageList (event) {
 		if (event.data.retData === 'messages_list') {
+			console.log(event.data.list)
 			event.data.list.map(mes => {
-				if (mes[4] == getCookie('userID')) {
-					var reciever = 'Me';
+				let reciever = "";
+				if (mes.author == getCookie('userID')) {
+					reciever = 'Me';
 				}
 				else {
-					var reciever = "ForMe";
+					reciever = "ForMe";
 				}
-				this.props.AddMessage(mes[0], reciever, this.props.match.params.chat_id, null, null, mes[5])
+				this.props.AddMessage(mes.content, reciever, this.props.match.params.chat_id, null, null, mes.added_at)
 			});
 		}
 	}
 
 
 	componentDidMount() {
-		var req1 = {
+		this.props.RemoveMessage()
+		let req1 = {
 			chatId: this.props.match.params.chat_id,
 			reqData: 'get_messages'
 		}
@@ -71,19 +74,15 @@ class MessageList extends Component {
 	}	
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-
 		if (this.props.match.params.chat_id !== prevProps.match.params.chat_id) {
-			console.log('remove messages')
 			this.props.RemoveMessage()
-			var req2 = {
+			let req2 = {
 				chatId: this.props.match.params.chat_id,
 				reqData: 'get_messages'
 			}
 			this.state.worker.then((worker) => {
 				worker.port.postMessage(req2);
 			});
-
-
 		}
 				
 	}
@@ -94,8 +93,8 @@ class MessageList extends Component {
 				return {__html: txt};
 			}
 			if (txt.indexOf("::") !== -1) {
-				var re = /::(\w+)::/gi;
-				var newstr = txt.replace(re, '<i class="$1"></i>');			
+				let re = /::(\w+)::/gi;
+				let newstr = txt.replace(re, '<i class="$1"></i>');			
 				return {__html: newstr};
 			}
 		}
@@ -111,7 +110,7 @@ class MessageList extends Component {
 		                    key={message.id}
 		                    {...message}
 		                />
-		        )) : console.log('jjh')}
+		        )) : console.log('')}
 		        </ul>
 		    </section>
 		);
@@ -119,19 +118,19 @@ class MessageList extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    msg: state.msg,
-    usr: state.usr
-  }
+    return {
+        msg: state.msg,
+        usr: state.usr
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return  {
-  	AddMessage: (message, author, chatId, filename, url, date) => dispatch(actions.addMessage(message, author, chatId, filename, url, date)),
-    currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized)),
-  	RemoveMessage: () => dispatch(actions.removeMessage()),
-
-  }
+    return  {
+    	AddMessage: (message, author, chatId, filename, url, date) => dispatch(actions.addMessage(message, author, chatId, filename, url, date)),
+        currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized)),
+    	RemoveMessage: () => dispatch(actions.removeMessage()),
+  
+    }
 };
 
 
