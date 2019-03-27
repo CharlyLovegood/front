@@ -5,8 +5,10 @@ import * as actions from '../../store/actions'
 import { withRouter } from "react-router-dom";
 import ProfileCreateChatComponent from './../../components/ProfileCreateChatComponent/ProfileCreateChatComponent';
 
-
+import styles from './styles.module.css';
 import workerCode from '../sharedWorker';
+
+
 
 function getCookie(name) {
 	let matches = document.cookie.match(new RegExp(
@@ -69,8 +71,7 @@ class Profile extends Component {
 		}
 		this.state.worker.then((worker) => {
 			worker.port.postMessage(req);
-		});
-				
+		});		
 	}	
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -107,9 +108,11 @@ class Profile extends Component {
 	}
 
 	render() {
+		const avatarLabelURL = require("../../icons/user1.png");
 		return(
-		    <section id="profile">		       
-		        {this.state.data[0]} 
+		    <section className={styles["profile"]}>	
+		    	<img alt="" className={styles["avatar"]} src={avatarLabelURL} />
+		        <h3>{this.state.data[0]}</h3>
 		        <ProfileCreateChatComponent value={this.state.value} handleCreateChat={(event) => this.handleCreateChat(event)} 
 		        													 handleChange={(event) => this.handleChange(event)}/>
 		    </section>

@@ -1,10 +1,10 @@
 import React from 'react';
 import * as actions from '../../store/actions'
-
+import styles from './styles.module.css';
 
 const emoji = props => {
   return (
-    <i className={props.type} onClick={() => {props.on(props.type)}}></i>
+    <i className={styles[props.type] + " " + styles["emoji"]} onClick={() => {props.on(props.type)}}></i>
   );
 }
 

@@ -4,12 +4,12 @@ import * as actions from '../../store/actions'
 
 import Emoji from './../../components/Emoji/Emoji';
 
-
+import styles from './styles.module.css';
 
 class EmojiViewer extends Component {
 	render() {
 		return(
-			<section id="emoji-viewer">
+			<section className={styles["emoji-viewer"]}>
 				<Emoji type="smile" on={this.props.handleEmojiClick}/>
 				<Emoji type="laugh" on={this.props.handleEmojiClick}/>
 				<Emoji type="kiss" on={this.props.handleEmojiClick}/>

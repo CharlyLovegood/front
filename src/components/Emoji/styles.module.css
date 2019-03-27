@@ -1,0 +1,62 @@
+/* .smile {
+    background: url(../../people32/slightly-smiling-face.png?sprite);
+}
+.laugh {
+    background: url(../../people32/grinning-face-with-smiling-eyes.png?sprite);
+}
+.cry {
+    background: url(../../people32/loudly-crying-face.png?sprite);
+}
+.angry {
+    background: url(../../people32/angry-face.png?sprite);
+}
+.kiss {
+    background: url(../../people32/face-blowing-a-kiss.png?sprite);
+}
+.love {
+    background: url(../../people32/smiling-face-with-heart-eyes.png?sprite);
+}
+.pout {
+    background: url(../../people32/pouting-face.png?sprite);
+}
+.fear {
+    background: url(../../people32/anxious-face-with-sweat.png?sprite);
+}
+.checks {
+    background: url(../../people32/hugging-face.png?sprite);
+} */
+
+.emoji {
+    background-repeat: no-repeat;
+    height: 64px;
+    width: 64px;
+    display: inline-block;
+}
+
+.smile {
+    background: url(../../people64/slightly-smiling-face.png?sprite);
+}
+.laugh {
+    background: url(../../people64/grinning-face-with-smiling-eyes.png?sprite);
+}
+.cry {
+    background: url(../../people64/loudly-crying-face.png?sprite);
+}
+.angry {
+    background: url(../../people64/angry-face.png?sprite);
+}
+.kiss {
+    background: url(../../people64/face-blowing-a-kiss.png?sprite);
+}
+.love {
+    background: url(../../people64/smiling-face-with-heart-eyes.png?sprite);
+}
+.pout {
+    background: url(../../people64/pouting-face.png?sprite);
+}
+.fear {
+    background: url(../../people64/anxious-face-with-sweat.png?sprite);
+}
+.checks {
+    background: url(../../people64/hugging-face.png?sprite);
+}

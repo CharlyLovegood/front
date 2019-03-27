@@ -4,6 +4,15 @@ import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
 
+import styles from './styles.module.css';
+import workerCode from '../sharedWorker';
+
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
 
 
 function setCookie(name, value, options) {
@@ -40,8 +49,48 @@ function deleteCookie(name) {
 
 class Navbar extends Component {
     state = {
-        value: ''
+        value: '',
+        worker: this.getSharedWorker()
     };
+
+    getSharedWorker () {
+        const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+        return new Promise((res, rej) => {
+            const reader = new FileReader();
+            reader.addEventListener('loadend', (event) => {
+                const worker = new SharedWorker(event.target.result);
+                worker.port.addEventListener('message', this.onWorkerList.bind(this));
+                worker.port.start();
+                window.addEventListener('beforeunload', () => {
+                    worker.port.postMessage('disconnect');
+                });
+                res(worker);
+            });
+            reader.addEventListener('error', rej);
+            reader.readAsDataURL(workerFile);
+        });
+    }
+
+    onWorkerList (event) {
+        switch (event.data.retData) {
+            case 'current_user_info':
+                console.log(event.data.list)
+                this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true)
+                break;
+            default:
+                break;
+        }
+    }
+
+    componentDidMount() {
+        let req = {
+            userId: getCookie('userID'),
+            reqData: 'get_current_user_info'
+        }
+        this.state.worker.then((worker) => {
+            worker.port.postMessage(req);
+        });     
+    }   
 
     logOut(event){
         deleteCookie('token');
@@ -49,21 +98,20 @@ class Navbar extends Component {
     }
 
     render() {
-        const avatarLabelURL = "https://mycs.net.au/wp-content/uploads/2016/03/person-icon-flat.png";
-        const menuLabelURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png";
+        const avatarLabelURL = this.props.usr.currentUser.avatar;
+        console.log(this.props.usr.currentUser);
         return (
-            <nav id="navbar" className="navbar">
-                <img alt="" className="avatar" src={avatarLabelURL} />
-                <p></p>
-                <p>{this.props.usr.currentUser.userName}</p>
-                    <div className="dropdown-menu">
-                        <img alt="" className="menu-label" src={menuLabelURL} />
-                        <div className="menu-list">
-                            <Link to='/chats'>Chats</Link>
-                            <Link to='/users'>Users</Link>
-                            <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>
-                        </div>
+            <nav className={styles["navbar"]}>
+                <div className={styles["user"]}>
+                    <img alt="" className={styles["avatar"]} src={avatarLabelURL} />
+                    <div className={styles["phrase"]}>
+                        <p className={styles["string"]}>Hello!</p>
+                        <p className={styles["string"]}>{this.props.usr.currentUser.userName}</p>
                     </div>
+                </div>
+                <div id="log-out">
+                    <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>
+                </div>
             </nav>
         );
     };
@@ -72,7 +120,7 @@ class Navbar extends Component {
 const mapDispatchToProps = (dispatch) => {
     return    {
         usersList: (userId, name) => dispatch(actions.currentUser()),
-        currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized))
+        currentUser: (userId, userName, avatar, isAuthorized) => dispatch(actions.currentUser(userId, userName, avatar, isAuthorized))
     }
 };
 

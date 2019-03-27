@@ -1,0 +1,8 @@
+#AddMessage-div {
+    border-width: 3px 0px 0px 0px;
+    border-color: #e9e5ed;
+    border-style: solid;
+    margin: 0px 20px;
+    flex-basis: 100px;
+    position: relative;
+}

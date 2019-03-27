@@ -9,6 +9,7 @@ import EmojiViewer from '../EmojiViewer/EmojiViewer'
 
 import workerCode from '../sharedWorker';
 
+import styles from './styles.module.css';
 
 
 function getCookie(name) {
@@ -152,9 +153,10 @@ class AddMessage extends Component {
     };
 
 
+
     render() {
         return (
-            <div id="AddMessage-div">
+            <div id={styles["AddMessage-div"]}>
                 {this.state.showEmojiViewer === true ? <EmojiViewer handleEmojiClick={this.handleEmojiClick}/> : <div />}
                 <MessageForm value={this.state.value} handleSubmit={(event) => this.handleSubmit(event)} 
                                                                                 handleFileUpload={(event) => this.handleFileUpload(event)} 

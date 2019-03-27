@@ -5,6 +5,66 @@ export default ((self) => {
 		ports.push(port);
 		port.addEventListener('message', (event) => {
 			switch (event.data.reqData) {
+				case 'get_current_user_info':
+					var data = {
+							jsonrpc: '2.0', 
+							method: 'get_user_info', 
+							params: {"user_id": event.data.userId}, 
+							id: '1'
+					};
+
+					var request = {
+					    method: 'POST',
+					    body: JSON.stringify(data),
+					    headers: {
+							'Access-Control-Allow-Origin':'*',
+							"Content-Type": "application/json",
+						},
+					};
+
+					fetch('http://127.0.0.1:5000/api',request)
+							.then(function(response)  {
+								return response.json();
+							})
+							.then(data => {
+								var answ = {
+									retData: 'current_user_info',
+									list: data
+								};
+								port.postMessage(answ);
+							})	
+					break;
+				case 'get_chat_member_info':
+					var data = {
+						jsonrpc: '2.0', 
+						method: 'get_chat_member_info', 
+						params: {"chat_id": event.data.chatId, "user_id": event.data.userId}, 
+						id: '1',
+					};
+
+					var request = {
+					    method: 'POST',
+					    body: JSON.stringify(data),
+					    headers: {
+							'Access-Control-Allow-Origin':'*',
+							"Content-Type": "application/json",
+						},
+
+					};
+
+					fetch('http://127.0.0.1:5000/api',request)
+							.then(function(response)  {
+								return response.json();
+							})
+							.then(data => {
+								console.log(data);
+								var answ = {
+									retData: 'chat_member_info',
+									list: data
+								};
+								port.postMessage(answ);
+							})
+					break;
 				case 'get_messages':
 					var data = {
 						jsonrpc: '2.0', 

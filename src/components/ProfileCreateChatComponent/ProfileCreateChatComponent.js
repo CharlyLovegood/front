@@ -1,12 +1,13 @@
 import React from 'react';
+import styles from './styles.module.css';
 
 const profileCreateChatComponent = (props) => {
 
   return (
-    <section id="profile-create-chat">
-      <input onChange={props.handleChange} onSubmit={props.handleCreateChat} type="text" value={props.value}/>
+    <section className={styles["profile-create-chat"]}>
+      <input className={styles["input"]} placeholder="Chat name" onChange={props.handleChange} onSubmit={props.handleCreateChat} type="text" value={props.value}/>
 
-      <button onClick={props.handleCreateChat}>Create chat</button>
+      <button className={styles["button"]} onClick={props.handleCreateChat}>Create chat</button>
     </section>
   );
 };

@@ -1,0 +1,32 @@
+.new-message {
+    height: 100%;
+    display: flex;
+}
+
+.input{
+    flex-basis: 100%;
+    margin: 10px;
+    font-size: 20px;
+}
+
+.imgButton{
+    height: 37px;
+    width: 37px;
+    padding: 3px;
+}
+
+.text-zone {
+    padding: 15px;
+    outline: none;
+    resize: none;
+    width: 100%;
+    background-color: #ffffffa1;
+    border-color: white;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+}
+
+button {
+    background-color: #ffffffa1;
+    border: none;
+}

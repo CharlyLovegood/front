@@ -95,7 +95,7 @@ function deleteCookie(name) {
 
 class App extends Component {
     render() {
-        setCookie('userID', 1)
+        setCookie('userID', 2)
         var userId = getCookie('userID');
         console.log(userId);
 

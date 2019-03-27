@@ -6,26 +6,10 @@
 
 
 #container{
+    background: #e4e1e000;
     display: flex;
     flex-direction: column;
     height: 100vh;
-}
-
-#navbar {
-    flex-basis: 70px;
-    position: relative;
-    background: #ffa084;
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-#sidebar {
-    flex-basis: 30%;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
 }
 
 #main {
@@ -34,81 +18,20 @@
     flex-direction: column;
 }
 
-
-
-
-#AddMessage-div {
-    flex-basis: 70px;
-    position: relative;
-}
-
-/* #main div {
-    flex-basis: 100%;
-} */
-
 #mainbody {
     display: flex;
     flex-basis: 100%;
 }
 
-#messages-list {
-    display: block;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-    flex-basis: 100%;
-}
-
-#new-message {
-    flex-basis: 70px;
-    display: flex;
-}
-
-#new-message input{
-    flex-basis: 100%;
-    margin: 10px;
-    font-size: 20px;
+#id {
+    margin-left: auto;
+    margin-right: 20px;
 }
 
 
-
-.avatar {
-    width: 57px;
-    margin: 11px;
-}
-
-.menu-list {
-    width: 150px;
-    display: none;
-    position: absolute;
-    top: 65px;
-    margin: 0px;
-    right: 35px;
-    background: #ffdfc8;
-    flex-direction: column;
-    z-index:1000;
-}
-
-.menu-list a {
-    color: black;
-    margin: 10px;
-
-}
-
-.menu-label {
-    padding: 10px;
-    height: 44px;
-    width: 44px;
-}
-
-.dropdown-menu {
-    font-size: 20px;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.dropdown-menu:hover .menu-list{
-    display: flex;
+#log-out {
+    margin-left: auto;
+    margin-right: 20px;
 }
 
 .chat-list {
@@ -122,60 +45,8 @@
     margin: 10px;
 }
 
-
-
-
-#messages-list ul {
-    padding: 10px;
-    margin:  0px;
-}
-
-#messages-list p.Me{
-    background: #ffe1e1;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    align-self: flex-end;
-    max-width: 70%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    min-width: 40%;
-}
-
-#messages-list p.ForMe{
-    background: #ffa185;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    align-self: flex-start;
-    max-width: 70%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    min-width: 40%;
-}
-
 ul p img {
     max-width: 100%;
-}
-
-img.imgButton{
-    height: 27px;
-    width: 27px;
-}
-
-
-section#new-message button {
-    background-color: white;
-    border: none;
-}
-
-ul {
-    flex-basis: 100%;
-    display: flex;
-    flex-direction: column;
-    font-size: 20px;
 }
 
 
@@ -183,15 +54,6 @@ ul {
 #container {
     font-size: 20px;
 }
-
-
-.date {
-    font-size: 12px;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-}
-
 
 
 .authcontainer {
@@ -211,54 +73,13 @@ ul {
     text-decoration: none;
 }
 
-.SidebarComponent {
-    margin: 5px;
-    display: flex;
-    /* max-width: 60%; */
-    padding: 10px;
-    background: #ff00002b;
-    border-radius: 6px;
+a {
     text-decoration: none;
-    color: black;
-}
-
-#profile {
-    align-items: center;
-    display: flex;
-    margin: 50px 0px;
-    font-size: 26px;
-    flex-direction: column;
-}
-
-#profile-create-chat input {
-    font-size: 20px;
-    margin: 20px 0px;
-}
-
-#profile-create-chat button {
-    font-size: 20px;
-    margin: 0px 10px;
 }
 
 
 
-#emoji-viewer i {
-    /* background-image: url(https://cdnjs.cloudflare.com/ajax/libs/emoji-picker/1.1.5/img/emoji_spritesheet_0.png?sprite); */
-    background-repeat: no-repeat;
-    height: 64px;
-    width: 64px;
-    display: inline-block;
-}
-
-.emoji-message i {
-    background-repeat: no-repeat;
-    height: 32px;
-    width: 32px;
-    display: inline-block;
-}
-
-
-.emoji-message i.smile {
+/* .emoji-message i.smile {
     background: url(people32/slightly-smiling-face.png?sprite);
 }
 .emoji-message i.laugh {
@@ -286,12 +107,6 @@ ul {
     background: url(people32/hugging-face.png?sprite);
 }
 
-
-
-
-i.smile {
-    background: url(people64/slightly-smiling-face.png?sprite);
-}
 i.laugh {
     background: url(people64/grinning-face-with-smiling-eyes.png?sprite);
 }
@@ -315,16 +130,64 @@ i.fear {
 }
 i.checks {
     background: url(people64/hugging-face.png?sprite);
+} */
+
+
+textarea {
+    font-size: x-large;
 }
 
-
-
-
-#emoji-viewer {
-    width: 200px;
-    height: 200px;
-    top: -210px;
-    position: absolute;
-    flex-direction: column;
+i.smile{   
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/slightly-smiling-face.png?sprite);
 }
-
+i.laugh {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/grinning-face-with-smiling-eyes.png?sprite);
+}
+i.cry {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/loudly-crying-face.png?sprite);
+}
+i.angry {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/angry-face.png?sprite);
+}
+i.kiss {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/face-blowing-a-kiss.png?sprite);
+}
+i.love {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/smiling-face-with-heart-eyes.png?sprite);
+}
+i.pout {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/pouting-face.png?sprite);
+}
+i.fear {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/anxious-face-with-sweat.png?sprite);
+}
+i.checks {
+    display: block; 
+    height: 32px;
+    width: 32px;
+    background: url(people32/hugging-face.png?sprite);
+}

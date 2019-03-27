@@ -3,7 +3,10 @@ import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
 import SidebarComponent from './../../components/SidebarComponent/SidebarComponent';
+import MenuBar from './../../components/MenuBar/MenuBar';
 
+
+import styles from './styles.module.css';
 import workerCode from '../sharedWorker';
 
 function getCookie(name) {
@@ -47,9 +50,18 @@ class Sidebar extends Component {
 	onWorkerList (event) {
 		switch (event.data.retData) {
 			case 'users_list':
-				event.data.list.map(name => this.props.usersList(name.user_id, name.nick))
+				var user_id = getCookie('userID')
+
+				// let i = Number(user_id)
+				event.data.list.map(name => {
+					var u = name.user_id
+					if (u != user_id) {
+						this.props.usersList(name.user_id, name.nick)
+					}
+				})
 				break;
 			case 'chats_list':
+				console.log(event.data.list)
 				event.data.list.map(dat => this.props.chatsList(dat.chat_id, dat.topic));
 				break;
 			default:
@@ -82,7 +94,8 @@ class Sidebar extends Component {
     render() {
     	console.log(this.props.usr.users)
 	    return (
-			<aside id="sidebar" className="sidebar">
+			<aside className={styles["sidebar"]}>
+				<MenuBar />
 		    	{this.props.match.params.view == "chats" ?
 		    		<h1>Chats</h1>
 		    	:
@@ -92,7 +105,7 @@ class Sidebar extends Component {
 		    	{this.props.match.params.view == "chats" ? 
 			    	this.props.cht.chats.map(chat => (
 			                <Link key={chat.id} to={"/chats/chat_id=" + (chat.id)}>
-				                <SidebarComponent
+				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.id}
 				                    {...chat}
 				                />
 			                </Link>
@@ -100,8 +113,9 @@ class Sidebar extends Component {
 		        :
 			    	this.props.usr.users.map(user => (
 			                <Link key={user.userId} to={"/users/user_id=" + (user.userId)}>
-				                <SidebarComponent
+				                <SidebarComponent path={this.props.location.pathname.split('=')} id = {user.userId}
 				                    {...user}
+				                
 				                />
 			                </Link>
 			        ))
