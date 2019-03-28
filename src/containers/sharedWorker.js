@@ -22,7 +22,7 @@ export default ((self) => {
 						},
 					};
 
-					fetch('http://127.0.0.1:5000/api',request)
+					fetch('http://89.208.197.146/api',request)
 							.then(function(response)  {
 								return response.json();
 							})
@@ -52,7 +52,7 @@ export default ((self) => {
 
 					};
 
-					fetch('http://127.0.0.1:5000/api',request)
+					fetch('http://89.208.197.146/api',request)
 							.then(function(response)  {
 								return response.json();
 							})
@@ -83,7 +83,7 @@ export default ((self) => {
 
 					};
 
-					fetch('http://127.0.0.1:5000/api',request)
+					fetch('http://89.208.197.146/api',request)
 							.then(function(response)  {
 								return response.json();
 							})
@@ -113,7 +113,7 @@ export default ((self) => {
 						},
 					};
 
-					fetch('http://127.0.0.1:5000/api',request)
+					fetch('http://89.208.197.146/api',request)
 							.then(function(response)  {
 								return response.json();
 							})
@@ -138,7 +138,7 @@ export default ((self) => {
 						},
 					};
 
-					fetch('http://127.0.0.1:5000/api',request)
+					fetch('http://89.208.197.146/api',request)
 							.then(function(response)  {
 								return response.json();
 							})
@@ -167,7 +167,7 @@ export default ((self) => {
 				        },
 				    };
 
-				    fetch('http://127.0.0.1:5000/api',request)
+				    fetch('http://89.208.197.146/api',request)
 				          .then(function(response)  {
 				            console.log(response);
 				          })
@@ -220,7 +220,7 @@ export default ((self) => {
 
 					};
 
-					fetch('http://192.168.9.71/api',request)
+					fetch('http://89.208.197.146/api',request)
 							.then(function(response)  {
 								return response.json();
 							})
