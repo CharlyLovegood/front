@@ -1,7 +1,7 @@
 {
   "main.css": "/static/css/main.05348e5e.chunk.css",
-  "main.js": "/static/js/main.bd20cbf7.chunk.js",
-  "main.js.map": "/static/js/main.bd20cbf7.chunk.js.map",
+  "main.js": "/static/js/main.6f90b5e0.chunk.js",
+  "main.js.map": "/static/js/main.6f90b5e0.chunk.js.map",
   "static/js/1.36ca5b78.chunk.js": "/static/js/1.36ca5b78.chunk.js",
   "static/js/1.36ca5b78.chunk.js.map": "/static/js/1.36ca5b78.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
@@ -10,6 +10,6 @@
   "static/media/user1.png": "/static/media/user1.3b106cb2.png",
   "static/media/styles.module.css": "/static/media/minimalizm-gradient-background.9c35480e.jpg",
   "index.html": "/index.html",
-  "precache-manifest.c4146cd4102414f0c24c71ce645cefc7.js": "/precache-manifest.c4146cd4102414f0c24c71ce645cefc7.js",
+  "precache-manifest.7397ed2f7bcb270061d79ce695ad3824.js": "/precache-manifest.7397ed2f7bcb270061d79ce695ad3824.js",
   "service-worker.js": "/service-worker.js"
 }
