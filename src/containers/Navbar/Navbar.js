@@ -109,6 +109,9 @@ class Navbar extends Component {
                         <p className={styles["string"]}>{this.props.usr.currentUser.userName}</p>
                     </div>
                 </div>
+                <div className={styles["logo-container"]}>
+                    <img className={styles["logo"]} src="https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif"/>
+                </div>
                 <div id="log-out">
                     <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>
                 </div>

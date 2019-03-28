@@ -111,7 +111,7 @@ class Profile extends Component {
 		const avatarLabelURL = require("../../icons/user1.png");
 		return(
 		    <section className={styles["profile"]}>	
-		    	<img alt="" className={styles["avatar"]} src={avatarLabelURL} />
+		    	<img alt="" className={styles["avatar"]} src="https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif" />
 		        <h3>{this.state.data[0]}</h3>
 		        <ProfileCreateChatComponent value={this.state.value} handleCreateChat={(event) => this.handleCreateChat(event)} 
 		        													 handleChange={(event) => this.handleChange(event)}/>

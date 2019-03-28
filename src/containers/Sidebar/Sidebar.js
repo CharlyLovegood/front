@@ -51,7 +51,7 @@ class Sidebar extends Component {
 		switch (event.data.retData) {
 			case 'users_list':
 				var user_id = getCookie('userID')
-
+				
 				// let i = Number(user_id)
 				event.data.list.map(name => {
 					var u = name.user_id
