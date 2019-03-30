@@ -7,7 +7,7 @@ import Navbar from './containers/Navbar/Navbar';
 import Sidebar from './containers/Sidebar/Sidebar';
 import Centrifuge from './containers/Centrifuge/Centrifuge';
 import Profile from './containers/Profile/Profile';
-
+import AuthWindow from './containers/AuthWindow/AuthWindow';
 
 import {connect} from 'react-redux';
 import * as actions from './store/actions';
@@ -95,17 +95,14 @@ function deleteCookie(name) {
 
 class App extends Component {
     render() {
-        setCookie('userID', 3)
+        setCookie('userID', 1)
         var userId = getCookie('userID');
         console.log(userId);
 
         if (userId == undefined) { 
             return (
                 <Router>
-                    <div className="authcontainer">
-                        <p>Please Log In</p>
-                        <a href="http://127.0.0.1:5000/" className="auth"> LOG </a>
-                    </div>
+                    <AuthWindow />
                 </Router>
             )
         }

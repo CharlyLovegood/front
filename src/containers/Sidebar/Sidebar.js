@@ -102,7 +102,7 @@ class Sidebar extends Component {
 		    		<h1>Users</h1>
 		    	}
 
-		    	{this.props.match.params.view == "chats" ? 
+		    	{this.props.match.params.view == "chats" || this.props.match.params.view == "" ? 
 			    	this.props.cht.chats.map(chat => (
 			                <Link key={chat.id} to={"/chats/chat_id=" + (chat.id)}>
 				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.id}

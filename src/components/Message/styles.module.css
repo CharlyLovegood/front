@@ -10,6 +10,7 @@
     position: relative;
     min-width: 40%;
     border-radius: 10px 10px 0px 10px;
+    animation: appear 2s;
 }
 
 .ForMe{
@@ -25,6 +26,7 @@
     position: relative;
     min-width: 40%;
     border-radius: 10px 10px 10px 0px;
+    animation: appear 2s;
 }
 
 .date {
@@ -37,4 +39,13 @@
     display: flex;
     /* justify-content: center; */
     align-items: flex-end;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        pacity: 1;
+    }
 }
