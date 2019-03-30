@@ -7,44 +7,8 @@ import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import workerCode from '../sharedWorker';
 
-function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-
-function setCookie(name, value, options) {
-    options = options || {};
-
-    let expires = options.expires;
-
-    if (typeof expires == "number" && expires) {
-        let d = new Date();
-        d.setTime(d.getTime() + expires * 1000);
-        expires = options.expires = d;
-    }
-    if (expires && expires.toUTCString) {
-        options.expires = expires.toUTCString();
-    }
-    value = encodeURIComponent(value);
-    let updatedCookie = name + "=" + value;
-    for (let propName in options) {
-        updatedCookie += "; " + propName;
-        let propValue = options[propName];
-        if (propValue !== true) {
-            updatedCookie += "=" + propValue;
-        }
-    }
-    document.cookie = updatedCookie;
-}
-
-function deleteCookie(name) {
-    setCookie(name, "", {
-        expires: -1
-    })
-}
+import {getCookie} from '../cookie'
+import {deleteCookie} from '../cookie'
 
 
 class Navbar extends Component {
@@ -101,16 +65,16 @@ class Navbar extends Component {
         const avatarLabelURL = this.props.usr.currentUser.avatar;
         console.log(this.props.usr.currentUser);
         return (
-            <nav className={styles["navbar"]}>
-                <div className={styles["user"]}>
-                    <img alt="" className={styles["avatar"]} src={avatarLabelURL} />
-                    <div className={styles["phrase"]}>
-                        <p className={styles["string"]}>Hello!</p>
-                        <p className={styles["string"]}>{this.props.usr.currentUser.userName}</p>
+            <nav className={styles.navbar}>
+                <div className={styles.user}>
+                    <img alt="avatar" className={styles.avatar} src={avatarLabelURL} />
+                    <div className={styles.phrase}>
+                        <p className={styles.string}>Hello!</p>
+                        <p className={styles.string}>{this.props.usr.currentUser.userName}</p>
                     </div>
                 </div>
-                <div className={styles["logo-container"]}>
-                    <img className={styles["logo"]} src="https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif"/>
+                <div className={styles.logo_container}>
+                    <img alt="logo" className={styles.logo} src="https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif"/>
                 </div>
                 <div id="log-out">
                     <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>

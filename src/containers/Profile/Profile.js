@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Message from './../../components/Message/Message';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { withRouter } from "react-router-dom";
@@ -8,14 +7,7 @@ import ProfileCreateChatComponent from './../../components/ProfileCreateChatComp
 import styles from './styles.module.css';
 import workerCode from '../sharedWorker';
 
-
-
-function getCookie(name) {
-	let matches = document.cookie.match(new RegExp(
-	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-	));
-	return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+import {getCookie} from '../cookie'
 
 
 class Profile extends Component {
@@ -110,8 +102,8 @@ class Profile extends Component {
 	render() {
 		const avatarLabelURL = require("../../icons/user1.png");
 		return(
-		    <section className={styles["profile"]}>	
-		    	<img alt="" className={styles["avatar"]} src="https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif" />
+		    <section className={styles.profile}>	
+		    	<img alt="" className={styles.avatar} src="https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif" />
 		        <h3>{this.state.data[0]}</h3>
 		        <ProfileCreateChatComponent value={this.state.value} handleCreateChat={(event) => this.handleCreateChat(event)} 
 		        													 handleChange={(event) => this.handleChange(event)}/>

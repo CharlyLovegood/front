@@ -5,8 +5,8 @@ import styles from './styles.module.css';
 const message = (props) => {
 	return (
 		<p className={styles[props.author]}>
-			<i>{props.author}</i> <i className={styles["date"]}>{props.date}</i>
-			<div className={styles["emoji-message"]} dangerouslySetInnerHTML={props.handleEmoji(props.message)} />
+			<i>{props.author}</i> <i className={styles.date}>{props.date}</i>
+			<div className={styles.emoji_message} dangerouslySetInnerHTML={props.handleEmoji(props.message)} />
 			<img alt="" src={props.url} />
 		</p>
 	)

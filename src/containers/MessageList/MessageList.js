@@ -1,22 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Message from './../../components/Message/Message';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { withRouter } from "react-router-dom";
-import Emoji from './../../components/Emoji/Emoji';
+
 import ChatBar from './../../components/ChatBar/ChatBar';
 
 import styles from './styles.module.css';
 import workerCode from '../sharedWorker';
 
-function getCookie(name) {
-	let matches = document.cookie.match(new RegExp(
-	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-	));
-	return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-
+import {getCookie} from '../cookie'
 
 class MessageList extends Component {
 	constructor(props) {
@@ -129,9 +122,9 @@ class MessageList extends Component {
 
 	render() {
 		return(
-		    <section className={styles["messages-list"]}>
+		    <section className={styles.messages_list}>
 		    	<ChatBar member={this.state.chat_member}/>		       
-		        <div className={styles["messages-box"]}>
+		        <div className={styles.messages_box}>
 		            {this.props.msg.messages ? this.props.msg.messages.map(message => (
 		                <Message handleEmoji={this.handleEmoji}
 		                    key={message.id}

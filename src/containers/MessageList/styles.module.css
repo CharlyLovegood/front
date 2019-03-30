@@ -1,11 +1,11 @@
-.messages-list {
+.messages_list {
     overflow:hidden;
     display: block;
     scroll-behavior: smooth;
     flex-basis: 100%;
 }
 
-.messages-box {
+.messages_box {
     flex-basis: 100%;
     display: flex;
     flex-direction: column;

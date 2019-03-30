@@ -5,18 +5,10 @@ import { Link } from 'react-router-dom';
 import SidebarComponent from './../../components/SidebarComponent/SidebarComponent';
 import MenuBar from './../../components/MenuBar/MenuBar';
 
-
 import styles from './styles.module.css';
 import workerCode from '../sharedWorker';
 
-function getCookie(name) {
-	let matches = document.cookie.match(new RegExp(
-	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-	));
-	return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-
+import {getCookie} from '../cookie'
 
 
 class Sidebar extends Component {
@@ -94,7 +86,7 @@ class Sidebar extends Component {
     render() {
     	console.log(this.props.usr.users)
 	    return (
-			<aside className={styles["sidebar"]}>
+			<aside className={styles.sidebar}>
 				<MenuBar />
 		    	{this.props.match.params.view == "chats" ?
 		    		<h1>Chats</h1>

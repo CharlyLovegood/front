@@ -3,21 +3,13 @@ import MessageForm from './../../components/Messageform/Messageform';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 
-import BrowserSprite from 'svg-baker-runtime/src/browser-sprite';
-import globalSprite from 'svg-sprite-loader/runtime/sprite';
 import EmojiViewer from '../EmojiViewer/EmojiViewer'
 
 import workerCode from '../sharedWorker';
 
 import styles from './styles.module.css';
 
-
-function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+import {getCookie} from '../cookie'
 
 
 

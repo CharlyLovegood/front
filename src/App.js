@@ -11,7 +11,10 @@ import AuthWindow from './containers/AuthWindow/AuthWindow';
 
 import {connect} from 'react-redux';
 import * as actions from './store/actions';
-import    { Redirect } from 'react-router-dom';
+
+
+import {getCookie} from './containers/cookie'
+import {setCookie} from './containers/cookie'
 
 
 
@@ -37,7 +40,6 @@ const initializePush = () => {
         })
         .then(token => {
             console.log('FCM Token:', token);
-            // Write your logic to send token to your server
         })
         .catch(error => {
             console.log('Error Occurred', error);
@@ -48,58 +50,13 @@ initializePush();
 
 
 
-
-
-function getCookie(name) {
-    var matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-function setCookie(name, value, options) {
-    options = options || {};
-
-    var expires = options.expires;
-
-    if (typeof expires == "number" && expires) {
-        var d = new Date();
-        d.setTime(d.getTime() + expires * 1000);
-        expires = options.expires = d;
-    }
-    if (expires && expires.toUTCString) {
-        options.expires = expires.toUTCString();
-    }
-
-    value = encodeURIComponent(value);
-
-    var updatedCookie = name + "=" + value;
-
-    for (var propName in options) {
-        updatedCookie += "; " + propName;
-        var propValue = options[propName];
-        if (propValue !== true) {
-            updatedCookie += "=" + propValue;
-        }
-    }
-    document.cookie = updatedCookie;
-}
-
-
-function deleteCookie(name) {
-    setCookie(name, "", {
-        expires: -1
-    })
-}
-
-
 class App extends Component {
     render() {
         setCookie('userID', 1)
         var userId = getCookie('userID');
         console.log(userId);
 
-        if (userId == undefined) { 
+        if (userId === undefined) { 
             return (
                 <Router>
                     <AuthWindow />

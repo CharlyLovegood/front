@@ -55,82 +55,9 @@ ul p img {
     font-size: 20px;
 }
 
-
-/* .authcontainer {
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    align-self: center;
-}
-
-.auth {
-    display: flex;
-    padding: 10px;
-    background: #ffa084;
-    text-decoration: none;
-} */
-
 a {
     text-decoration: none;
 }
-
-
-
-/* .emoji-message i.smile {
-    background: url(people32/slightly-smiling-face.png?sprite);
-}
-.emoji-message i.laugh {
-    background: url(people32/grinning-face-with-smiling-eyes.png?sprite);
-}
-.emoji-message i.cry {
-    background: url(people32/loudly-crying-face.png?sprite);
-}
-.emoji-message i.angry {
-    background: url(people32/angry-face.png?sprite);
-}
-.emoji-message i.kiss {
-    background: url(people32/face-blowing-a-kiss.png?sprite);
-}
-.emoji-message i.love {
-    background: url(people32/smiling-face-with-heart-eyes.png?sprite);
-}
-.emoji-message i.pout {
-    background: url(people32/pouting-face.png?sprite);
-}
-.emoji-message i.fear {
-    background: url(people32/anxious-face-with-sweat.png?sprite);
-}
-.emoji-message i.checks {
-    background: url(people32/hugging-face.png?sprite);
-}
-
-i.laugh {
-    background: url(people64/grinning-face-with-smiling-eyes.png?sprite);
-}
-i.cry {
-    background: url(people64/loudly-crying-face.png?sprite);
-}
-i.angry {
-    background: url(people64/angry-face.png?sprite);
-}
-i.kiss {
-    background: url(people64/face-blowing-a-kiss.png?sprite);
-}
-i.love {
-    background: url(people64/smiling-face-with-heart-eyes.png?sprite);
-}
-i.pout {
-    background: url(people64/pouting-face.png?sprite);
-}
-i.fear {
-    background: url(people64/anxious-face-with-sweat.png?sprite);
-}
-i.checks {
-    background: url(people64/hugging-face.png?sprite);
-} */
 
 
 textarea {

@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
-import jwt from 'jsonwebtoken';
 import Centrifuge from 'centrifuge';
 
-function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-};
-
+import {getCookie} from '../cookie'
 
 class CentrifugeClass extends Component {
 	componentDidMount() {

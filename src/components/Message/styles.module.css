@@ -35,7 +35,7 @@
     top: 5px;
     right: 5px;
 }
-.emoji-message {
+.emoji_message {
     display: flex;
     /* justify-content: center; */
     align-items: flex-end;
