@@ -1,0 +1,14 @@
+.chatBar {
+    margin: 10px 20px;
+    padding: 10px;
+    border-width: 0px 0px 2px 0px;
+    border-color: #e9e5ed;
+    border-style: solid;
+    display: flex;
+}
+
+.menu_label {
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+}

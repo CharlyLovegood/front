@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import * as actions from '../../store/actions'
 
 import Emoji from './../../components/Emoji/Emoji';
 
-
+import styles from './styles.module.css';
 
 class EmojiViewer extends Component {
 	render() {
 		return(
-			<section id="emoji-viewer">
+			<section className={styles.emoji_viewer}>
 				<Emoji type="smile" on={this.props.handleEmojiClick}/>
 				<Emoji type="laugh" on={this.props.handleEmojiClick}/>
 				<Emoji type="kiss" on={this.props.handleEmojiClick}/>
@@ -25,18 +23,4 @@ class EmojiViewer extends Component {
 }
 
 
-
-const mapDispatchToProps = (dispatch) => {
-  return  {
-  	AddEmoji: (emojiCode) => dispatch(actions.addEmoji(emojiCode))
-  }
-};
-
-const mapStateToProps = state => {
-  return {
-    msg: state.msg
-  }
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(EmojiViewer)
+export default EmojiViewer

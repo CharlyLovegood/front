@@ -10,11 +10,12 @@ export const usersList = (userId, name) => ({
 })
 
 
-export const currentUser = (userId, userName, isAuthorized) => ({
+export const currentUser = (userId, userName, avatar, isAuthorized) => ({
     type: types.CURRENT_USER,
     payload: {
         id: userId,
 	    userName,
+        avatar,
 	    isAuthorized
     }
 })

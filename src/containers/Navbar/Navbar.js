@@ -4,44 +4,57 @@ import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
 
+import styles from './styles.module.css';
+import workerCode from '../sharedWorker';
 
-
-function setCookie(name, value, options) {
-    options = options || {};
-
-    let expires = options.expires;
-
-    if (typeof expires == "number" && expires) {
-        let d = new Date();
-        d.setTime(d.getTime() + expires * 1000);
-        expires = options.expires = d;
-    }
-    if (expires && expires.toUTCString) {
-        options.expires = expires.toUTCString();
-    }
-    value = encodeURIComponent(value);
-    let updatedCookie = name + "=" + value;
-    for (let propName in options) {
-        updatedCookie += "; " + propName;
-        let propValue = options[propName];
-        if (propValue !== true) {
-            updatedCookie += "=" + propValue;
-        }
-    }
-    document.cookie = updatedCookie;
-}
-
-function deleteCookie(name) {
-    setCookie(name, "", {
-        expires: -1
-    })
-}
+import {getCookie} from '../cookie'
+import {deleteCookie} from '../cookie'
 
 
 class Navbar extends Component {
     state = {
-        value: ''
+        value: '',
+        worker: this.getSharedWorker()
     };
+
+    getSharedWorker () {
+        const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+        return new Promise((res, rej) => {
+            const reader = new FileReader();
+            reader.addEventListener('loadend', (event) => {
+                const worker = new SharedWorker(event.target.result);
+                worker.port.addEventListener('message', this.onWorkerList.bind(this));
+                worker.port.start();
+                window.addEventListener('beforeunload', () => {
+                    worker.port.postMessage('disconnect');
+                });
+                res(worker);
+            });
+            reader.addEventListener('error', rej);
+            reader.readAsDataURL(workerFile);
+        });
+    }
+
+    onWorkerList (event) {
+        switch (event.data.retData) {
+            case 'current_user_info':
+                console.log(event.data.list)
+                this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true)
+                break;
+            default:
+                break;
+        }
+    }
+
+    componentDidMount() {
+        let req = {
+            userId: getCookie('userID'),
+            reqData: 'get_current_user_info'
+        }
+        this.state.worker.then((worker) => {
+            worker.port.postMessage(req);
+        });     
+    }   
 
     logOut(event){
         deleteCookie('token');
@@ -49,21 +62,23 @@ class Navbar extends Component {
     }
 
     render() {
-        const avatarLabelURL = "https://mycs.net.au/wp-content/uploads/2016/03/person-icon-flat.png";
-        const menuLabelURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png";
+        const avatarLabelURL = this.props.usr.currentUser.avatar;
+        console.log(this.props.usr.currentUser);
         return (
-            <nav id="navbar" className="navbar">
-                <img alt="" className="avatar" src={avatarLabelURL} />
-                <p></p>
-                <p>{this.props.usr.currentUser.userName}</p>
-                    <div className="dropdown-menu">
-                        <img alt="" className="menu-label" src={menuLabelURL} />
-                        <div className="menu-list">
-                            <Link to='/chats'>Chats</Link>
-                            <Link to='/users'>Users</Link>
-                            <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>
-                        </div>
+            <nav className={styles.navbar}>
+                <div className={styles.user}>
+                    <img alt="avatar" className={styles.avatar} src={avatarLabelURL} />
+                    <div className={styles.phrase}>
+                        <p className={styles.string}>Hello!</p>
+                        <p className={styles.string}>{this.props.usr.currentUser.userName}</p>
                     </div>
+                </div>
+                <div className={styles.logo_container}>
+                    <img alt="logo" className={styles.logo} src="https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif"/>
+                </div>
+                <div id="log-out">
+                    <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>
+                </div>
             </nav>
         );
     };
@@ -72,7 +87,7 @@ class Navbar extends Component {
 const mapDispatchToProps = (dispatch) => {
     return    {
         usersList: (userId, name) => dispatch(actions.currentUser()),
-        currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized))
+        currentUser: (userId, userName, avatar, isAuthorized) => dispatch(actions.currentUser(userId, userName, avatar, isAuthorized))
     }
 };
 

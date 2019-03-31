@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Message from './../../components/Message/Message';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { withRouter } from "react-router-dom";
-import Emoji from './../../components/Emoji/Emoji';
 
+import ChatBar from './../../components/ChatBar/ChatBar';
+
+import styles from './styles.module.css';
 import workerCode from '../sharedWorker';
 
-function getCookie(name) {
-	let matches = document.cookie.match(new RegExp(
-	    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-	));
-	return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-
+import {getCookie} from '../cookie'
 
 class MessageList extends Component {
 	constructor(props) {
@@ -23,6 +18,7 @@ class MessageList extends Component {
 		this.state = {
 		    data: [],
 		    user: 0,
+		    chat_member: [],
 		    worker: this.getSharedWorker()
 		};
 	}
@@ -46,6 +42,11 @@ class MessageList extends Component {
 	}
 
 	onWorkerMessageList (event) {
+		if (event.data.retData === 'chat_member_info') {
+			console.log(event.data.list)
+			console.log('jjj=====')
+			this.setState({chat_member: event.data.list}) 
+		}
 		if (event.data.retData === 'messages_list') {
 			console.log(event.data.list)
 			event.data.list.map(mes => {
@@ -71,6 +72,15 @@ class MessageList extends Component {
 		this.state.worker.then((worker) => {
 			worker.port.postMessage(req1);
 		});
+
+		let req3 = {
+			chatId: this.props.match.params.chat_id,
+			userId: getCookie('userID'),
+			reqData: 'get_chat_member_info'
+		}
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req3);
+		});
 	}	
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -83,6 +93,15 @@ class MessageList extends Component {
 			this.state.worker.then((worker) => {
 				worker.port.postMessage(req2);
 			});
+
+			let req4 = {
+				chatId: this.props.match.params.chat_id,
+				userId: getCookie('userID'),
+				reqData: 'get_chat_member_info'
+			}
+			this.state.worker.then((worker) => {
+				worker.port.postMessage(req4);
+			});
 		}
 				
 	}
@@ -94,7 +113,7 @@ class MessageList extends Component {
 			}
 			if (txt.indexOf("::") !== -1) {
 				let re = /::(\w+)::/gi;
-				let newstr = txt.replace(re, '<i class="$1"></i>');			
+				let newstr = txt.replace(re, ' <i class="$1"></i> ');			
 				return {__html: newstr};
 			}
 		}
@@ -103,15 +122,16 @@ class MessageList extends Component {
 
 	render() {
 		return(
-		    <section id="messages-list">		       
-		        <ul>
+		    <section className={styles.messages_list}>
+		    	<ChatBar member={this.state.chat_member}/>		       
+		        <div className={styles.messages_box}>
 		            {this.props.msg.messages ? this.props.msg.messages.map(message => (
 		                <Message handleEmoji={this.handleEmoji}
 		                    key={message.id}
 		                    {...message}
 		                />
 		        )) : console.log('')}
-		        </ul>
+		        </div>
 		    </section>
 		);
 	};

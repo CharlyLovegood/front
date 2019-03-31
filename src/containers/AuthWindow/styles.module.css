@@ -1,0 +1,25 @@
+.authcontainer {
+    font-size: 20px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+
+    margin-top: 100px;
+    border-style: solid;
+    padding: 30px 20px 100px 20px;
+    border-width: 2px;
+    border-color: #c3b8c4;
+}
+
+.auth {
+    border-radius: 5px;
+    font-size: 20px;
+    margin: 0px 10px;
+    padding: 10px 20px;
+    background: #856aad;
+    color: white;
+}
