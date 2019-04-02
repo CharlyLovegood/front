@@ -1,13 +1,15 @@
 {
-  "main.css": "/static/css/main.a8013d98.chunk.css",
-  "main.js": "/static/js/main.d00d5d34.chunk.js",
-  "main.js.map": "/static/js/main.d00d5d34.chunk.js.map",
-  "static/js/1.4efadf2a.chunk.js": "/static/js/1.4efadf2a.chunk.js",
-  "static/js/1.4efadf2a.chunk.js.map": "/static/js/1.4efadf2a.chunk.js.map",
+  "main.css": "/static/css/main.05348e5e.chunk.css",
+  "main.js": "/static/js/main.40ae43c6.chunk.js",
+  "main.js.map": "/static/js/main.40ae43c6.chunk.js.map",
+  "static/js/1.36ca5b78.chunk.js": "/static/js/1.36ca5b78.chunk.js",
+  "static/js/1.36ca5b78.chunk.js.map": "/static/js/1.36ca5b78.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/css/main.a8013d98.chunk.css.map": "/static/css/main.a8013d98.chunk.css.map",
+  "static/css/main.05348e5e.chunk.css.map": "/static/css/main.05348e5e.chunk.css.map",
+  "static/media/user1.png": "/static/media/user1.3b106cb2.png",
+  "static/media/styles.module.css": "/static/media/minimalizm-gradient-background.9c35480e.jpg",
   "index.html": "/index.html",
-  "precache-manifest.2bb52c7c7b9929bf0547983acfed9fdd.js": "/precache-manifest.2bb52c7c7b9929bf0547983acfed9fdd.js",
+  "precache-manifest.274ab607a2c84841cd125c173da4e57e.js": "/precache-manifest.274ab607a2c84841cd125c173da4e57e.js",
   "service-worker.js": "/service-worker.js"
 }
