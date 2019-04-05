@@ -1,4 +1,5 @@
 export function getCookie(name) {
+    // console.log('I am getting cookies!');
     var matches = document.cookie.match(new RegExp(
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
     ));
@@ -7,7 +8,7 @@ export function getCookie(name) {
 
 export function setCookie(name, value, options) {
     options = options || {};
-
+    // console.log('I am setting cookies!');
     var expires = options.expires;
 
     if (typeof expires == "number" && expires) {

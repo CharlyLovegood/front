@@ -42,7 +42,7 @@ class Profile extends Component {
 	onWorkerList (event) {
 		switch (event.data.retData) {
 			case 'user_info':
-				this.setState({data: [event.data.list.name, event.data.list.user_id]})
+				this.setState({data: [event.data.list.name, event.data.list.user_id, event.data.list.avatar]})
 				break;
 			default:
 				break;
@@ -56,7 +56,6 @@ class Profile extends Component {
 
 
 	componentDidMount() {
-		console.log(this.props.match.params.user_id);
 		let req = {
 			userId: this.props.match.params.user_id,
 			reqData: 'get_user_info'
@@ -71,7 +70,8 @@ class Profile extends Component {
 			let req = {
 				userId: this.props.match.params.user_id,
 				reqData: 'get_user_info'
-			}
+			};
+			
 			this.state.worker.then((worker) => {
 				worker.port.postMessage(req);
 			});
@@ -100,10 +100,10 @@ class Profile extends Component {
 	}
 
 	render() {
-		const avatarLabelURL = require("../../icons/user1.png");
+		const alternativeURL = "https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif";
 		return(
 		    <section className={styles.profile}>	
-		    	<img alt="" className={styles.avatar} src="https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif" />
+		    	<img alt="" className={styles.avatar} src={alternativeURL} />
 		        <h3>{this.state.data[0]}</h3>
 		        <ProfileCreateChatComponent value={this.state.value} handleCreateChat={(event) => this.handleCreateChat(event)} 
 		        													 handleChange={(event) => this.handleChange(event)}/>
@@ -114,7 +114,7 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
   return {
-    usr: state.usr
+    usr: state.usr,
   }
 };
 

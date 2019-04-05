@@ -1,4 +1,4 @@
-.authcontainer {
+.container {
     align-items: center;
     display: flex;
     margin: 50px 0px;
@@ -21,17 +21,4 @@
     padding: 10px 20px;
     background: #856aad;
     color: white;
-}
-
-.google_button {
-    border-radius: 50%;
-    font-size: 30px;
-    margin: 10px 10px;
-    padding: 18px 20px;
-    background: #ff2d00;
-    color: white;
-}
-
-.link {
-    color: #856aad;
 }

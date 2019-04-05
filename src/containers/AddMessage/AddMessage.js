@@ -70,7 +70,6 @@ class AddMessage extends Component {
                 reqData: 'post_message'
             }
 
-
             this.state.worker.then((worker) => {
                 worker.port.postMessage(req);
             });
@@ -151,10 +150,10 @@ class AddMessage extends Component {
             <div id={styles["AddMessage-div"]}>
                 {this.state.showEmojiViewer === true ? <EmojiViewer handleEmojiClick={this.handleEmojiClick}/> : <div />}
                 <MessageForm value={this.state.value} handleSubmit={(event) => this.handleSubmit(event)} 
-                                                                                handleFileUpload={(event) => this.handleFileUpload(event)} 
-                                                                                handleGeoposition={(event) => this.handleGeoposition(event)}
-                                                                                handleChange={(event) => this.handleChange(event)}
-                                                                                handleOpenEmojiViewer={(event) => this.handleOpenEmojiViewer(event)}/>
+                                                        handleFileUpload={(event) => this.handleFileUpload(event)} 
+                                                        handleGeoposition={(event) => this.handleGeoposition(event)}
+                                                        handleChange={(event) => this.handleChange(event)}
+                                                        handleOpenEmojiViewer={(event) => this.handleOpenEmojiViewer(event)}/>
             
             </div>
 
@@ -170,7 +169,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
     return {
-        
+        currentUsr: state.usr.currentUser,
     }
 };
 

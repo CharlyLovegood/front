@@ -19,3 +19,15 @@ export const currentUser = (userId, userName, avatar, isAuthorized) => ({
 	    isAuthorized
     }
 })
+
+export const removeCurrentUser = () => ({
+    type: types.REMOVE_CURRENT_USER,
+    payload: {
+    }
+})
+
+export const removeUsersList = () => ({
+    type: types.REMOVE_USERS_LIST,
+    payload: {
+    }
+})

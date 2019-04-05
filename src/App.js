@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 // import Layout from './components/Layout/Layout';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import MessageList from './containers/MessageList/MessageList';
@@ -8,13 +8,14 @@ import Sidebar from './containers/Sidebar/Sidebar';
 import Centrifuge from './containers/Centrifuge/Centrifuge';
 import Profile from './containers/Profile/Profile';
 import AuthWindow from './containers/AuthWindow/AuthWindow';
+import RegWindow from './containers/RegWindow/RegWindow';
+
 
 import {connect} from 'react-redux';
 import * as actions from './store/actions';
 
 
 import {getCookie} from './containers/cookie'
-import {setCookie} from './containers/cookie'
 
 
 
@@ -52,34 +53,34 @@ initializePush();
 
 class App extends Component {
     render() {
-        setCookie('userID', 1)
         var userId = getCookie('userID');
-        console.log(userId);
-
         if (userId === undefined) { 
             return (
                 <Router>
-                    <AuthWindow />
+                    <div id="container">
+                        < Route path='/login' component={AuthWindow} />
+                        < Route path='/register' component={RegWindow} />
+                    </div>
                 </Router>
             )
         }
         else {
             return (
                 <Router>
-                    <div id="container">
-                        <Navbar />
-                        <main id="mainbody">
-                            <Route path='/:view' component={Sidebar} />
-                            <div id="main">
-                                <Route path='/chats/chat_id=:num' component={Centrifuge} />
-                                
-                                <Route exact path='/users/user_id=:user_id' component={ (props) => <Profile {...props} />}/>
-
-                                <Route exact path='/chats/chat_id=:chat_id' component={ (props) => <MessageList {...props} />}/>
-                                <Route path='/chats/chat_id=:chat_id' component={AddMessage} />
-                            </div>
-                        </main>
-                    </div>
+                    <Route exact path='/'>
+                        <div id="container">
+                            <Navbar />
+                            <main id="mainbody">
+                                <Route path='/:view' component={Sidebar} />
+                                <div id="main">
+                                    <Route path='/chats/chat_id=:num' component={Centrifuge} />
+                                    <Route exact path='/users/user_id=:user_id' component={ (props) => <Profile {...props} />}/>
+                                    <Route exact path='/chats/chat_id=:chat_id' component={ (props) => <MessageList {...props} />}/>
+                                    <Route path='/chats/chat_id=:chat_id' component={AddMessage} />
+                                </div>
+                            </main>
+                        </div>
+                    </Route>      
                 </Router>
             )   
         }

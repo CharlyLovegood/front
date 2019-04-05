@@ -5,6 +5,64 @@ export default ((self) => {
 		ports.push(port);
 		port.addEventListener('message', (event) => {
 			switch (event.data.reqData) {
+				case 'login_user':
+					var data = {
+							jsonrpc: '2.0', 
+							method: 'check_user_password', 
+							params: {"email": event.data.email, "password": event.data.password}, 
+							id: '1'
+					};
+
+					var request = {
+					    method: 'POST',
+					    body: JSON.stringify(data),
+					    headers: {
+							'Access-Control-Allow-Origin':'*',
+							"Content-Type": "application/json",
+						},
+					};
+
+					fetch('http://127.0.0.1:5000/api',request)
+							.then(function(response)  {
+								return response.json();
+							})
+							.then(data => {
+								var answ = {
+									retData: 'user_handle_login',
+									list: data
+								};
+								port.postMessage(answ);
+							})	
+					break;				
+				case 'create_user':
+					var data = {
+							jsonrpc: '2.0', 
+							method: 'create_user', 
+							params: {"nick": event.data.nick, "name": event.data.name, "email": event.data.email, "password": event.data.password}, 
+							id: '1'
+					};
+
+					var request = {
+					    method: 'POST',
+					    body: JSON.stringify(data),
+					    headers: {
+							'Access-Control-Allow-Origin':'*',
+							"Content-Type": "application/json",
+						},
+					};
+
+					fetch('http://127.0.0.1:5000/api',request)
+							.then(function(response)  {
+								return response.json();
+							})
+							.then(data => {
+								var answ = {
+									retData: 'user_handle_created',
+									list: data
+								};
+								port.postMessage(answ);
+							})	
+					break;
 				case 'get_current_user_info':
 					var data = {
 							jsonrpc: '2.0', 
