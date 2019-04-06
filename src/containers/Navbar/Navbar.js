@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import    from './../../components/Avatar/Avatar';
 import {connect} from 'react-redux';
-import * as actions from '../../store/actions'
+import * as actions from '../../store/actions';
 import { Link } from 'react-router-dom';
 
 import styles from './styles.module.css';
@@ -38,8 +37,7 @@ class Navbar extends Component {
     onWorkerList (event) {
         switch (event.data.retData) {
             case 'current_user_info':
-                console.log(event.data.list)
-                this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true)
+                this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true);
                 break;
             default:
                 break;
@@ -59,11 +57,15 @@ class Navbar extends Component {
     logOut(event){
         deleteCookie('token');
         deleteCookie('userID');
+        this.props.removeCurrentUser();
+        this.props.history.push("/login");
     }
 
     render() {
-        const avatarLabelURL = this.props.usr.currentUser.avatar;
-        console.log(this.props.usr.currentUser);
+        let avatarLabelURL = this.props.usr.currentUser.avatar;
+        if (this.props.usr.currentUser.avatar == undefined) {
+            avatarLabelURL = require("../../icons/user7.png");
+        }
         return (
             <nav className={styles.navbar}>
                 <div className={styles.user}>
@@ -76,8 +78,8 @@ class Navbar extends Component {
                 <div className={styles.logo_container}>
                     <img alt="logo" className={styles.logo} src="https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif"/>
                 </div>
-                <div id="log-out">
-                    <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>
+                <div className={styles.log_out}>
+                    <Link className={styles.log_out} to='/login' onClick={(event) => this.logOut(event)}>Log Out</Link>
                 </div>
             </nav>
         );
@@ -87,7 +89,8 @@ class Navbar extends Component {
 const mapDispatchToProps = (dispatch) => {
     return    {
         usersList: (userId, name) => dispatch(actions.currentUser()),
-        currentUser: (userId, userName, avatar, isAuthorized) => dispatch(actions.currentUser(userId, userName, avatar, isAuthorized))
+        currentUser: (userId, userName, avatar, isAuthorized) => dispatch(actions.currentUser(userId, userName, avatar, isAuthorized)),
+        removeCurrentUser: () => dispatch(actions.removeCurrentUser()),
     }
 };
 

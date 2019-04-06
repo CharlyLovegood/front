@@ -42,18 +42,15 @@ class Sidebar extends Component {
 	onWorkerList (event) {
 		switch (event.data.retData) {
 			case 'users_list':
-				var user_id = getCookie('userID')
-				
-				// let i = Number(user_id)
+				const user_id = getCookie('userID')
 				event.data.list.map(name => {
-					var u = name.user_id
+					const u = name.user_id
 					if (u != user_id) {
 						this.props.usersList(name.user_id, name.nick)
 					}
 				})
 				break;
 			case 'chats_list':
-				console.log(event.data.list)
 				event.data.list.map(dat => this.props.chatsList(dat.chat_id, dat.topic));
 				break;
 			default:
@@ -82,19 +79,17 @@ class Sidebar extends Component {
 		});
 	}
 
-
     render() {
-    	console.log(this.props.usr.users)
 	    return (
 			<aside className={styles.sidebar}>
 				<MenuBar />
-		    	{this.props.match.params.view == "chats" ?
+		    	{this.props.match.params.view === "chats" ?
 		    		<h1>Chats</h1>
 		    	:
 		    		<h1>Users</h1>
 		    	}
 
-		    	{this.props.match.params.view == "chats" || this.props.match.params.view == "" ? 
+		    	{(this.props.match.params.view === "chats" || this.props.match.params.view === "") ? 
 			    	this.props.cht.chats.map(chat => (
 			                <Link key={chat.id} to={"/chats/chat_id=" + (chat.id)}>
 				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.id}

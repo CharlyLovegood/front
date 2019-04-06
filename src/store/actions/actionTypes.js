@@ -16,3 +16,7 @@ export const CHAT_LIST = 'CHAT_LIST'
 export const EMOJI = 'EMOJI'
 
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE'
+export const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER'
+
+export const REMOVE_USERS_LIST = 'REMOVE_USERS_LIST'
+export const REMOVE_CHAT_LIST = 'REMOVE_CHAT_LIST'

@@ -26,7 +26,7 @@ class CentrifugeClass extends Component {
 	}	
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (this.props.match.params.num != prevProps.match.params.num) {
+		if (this.props.match.params.num !== prevProps.match.params.num) {
 			console.log(this.props.match.params.num);
 			const token = getCookie('token');
 			let chanel = this.props.match.params.num;
@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
   return {
-    
+    currentUsr: state.usr.currentUser,
   }
 };
 

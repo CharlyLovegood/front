@@ -43,20 +43,12 @@ class MessageList extends Component {
 
 	onWorkerMessageList (event) {
 		if (event.data.retData === 'chat_member_info') {
-			console.log(event.data.list)
-			console.log('jjj=====')
 			this.setState({chat_member: event.data.list}) 
 		}
 		if (event.data.retData === 'messages_list') {
-			console.log(event.data.list)
 			event.data.list.map(mes => {
 				let reciever = "";
-				if (mes.author == getCookie('userID')) {
-					reciever = 'Me';
-				}
-				else {
-					reciever = "ForMe";
-				}
+				mes.author == getCookie('userID') ? reciever = 'Me' : reciever = "ForMe";
 				this.props.AddMessage(mes.content, reciever, this.props.match.params.chat_id, null, null, mes.added_at)
 			});
 		}
@@ -140,7 +132,7 @@ class MessageList extends Component {
 const mapStateToProps = state => {
     return {
         msg: state.msg,
-        usr: state.usr
+        currentUsr: state.usr.currentUser
     }
 };
 

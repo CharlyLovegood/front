@@ -8,7 +8,7 @@
     border-style: solid;
 }
 
-.SidebarComponent-active {
+.SidebarComponent_active {
     display: flex;
     padding: 30px 30px;
     text-decoration: none;

@@ -10,3 +10,9 @@ export const chatList = (id, topic) => ({
     }
 })
 
+
+export const removeChatList = () => ({
+    type: types.REMOVE_CHAT_LIST,
+    payload: {
+    }
+})

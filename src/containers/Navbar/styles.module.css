@@ -3,10 +3,13 @@
     flex-basis: 90px;
     position: relative;
 
-    background: #f3f1f4d6;
+    background: rgb(93, 72, 161);
+    /* background: radial-gradient(circle, rgb(122, 96, 169) 0%, rgb(122, 96, 170) 46%, rgba(84,67,158,1) 98%); */
     display: flex;
     justify-content: flex-start;
     align-items: center;
+
+    color:  #f5f4f3;
 }
 
 .user {
@@ -18,15 +21,16 @@
 }
 
 .avatar {
-    width: 65px;
+    width: 58px;
     margin: 11px;
     border-radius: 50%;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .phrase {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: flex-end;
     width: 200px;
     height: 100%;
@@ -43,4 +47,10 @@
 .logo_container {
     height: 100%;
     display: none;
+}
+
+.log_out {
+    color: #f5f4f3;
+    margin-left: auto;
+    margin-right: 20px;
 }
