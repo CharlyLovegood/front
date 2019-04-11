@@ -16,6 +16,7 @@ import * as actions from './store/actions';
 
 
 import {getCookie} from './containers/cookie'
+import {setCookie} from './containers/cookie'
 
 
 
@@ -52,6 +53,8 @@ initializePush();
 
 
 class App extends Component {
+    
+
     render() {
         var userId = getCookie('userID');
         if (userId === undefined) { 
