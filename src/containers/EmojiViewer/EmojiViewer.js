@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Emoji from './../../components/Emoji/Emoji';
 
 import styles from './styles.module.css';
 
-class EmojiViewer extends Component {
-	render() {
-		return(
-			<section className={styles.emoji_viewer}>
-				<Emoji type="smile" on={this.props.handleEmojiClick}/>
-				<Emoji type="laugh" on={this.props.handleEmojiClick}/>
-				<Emoji type="kiss" on={this.props.handleEmojiClick}/>
-				<Emoji type="love" on={this.props.handleEmojiClick}/>
-				<Emoji type="cry" on={this.props.handleEmojiClick}/>
-				<Emoji type="angry" on={this.props.handleEmojiClick}/>
-				<Emoji type="pout" on={this.props.handleEmojiClick}/>
-				<Emoji type="checks" on={this.props.handleEmojiClick}/>
-				<Emoji type="fear" on={this.props.handleEmojiClick}/>
-			</section>
-		);
-	}
+function EmojiViewer(props) {
+	return(
+		<section className={styles.emoji_viewer}>
+			<Emoji type="smile" on={this.props.handleEmojiClick}/>
+			<Emoji type="laugh" on={this.props.handleEmojiClick}/>
+			<Emoji type="kiss" on={this.props.handleEmojiClick}/>
+			<Emoji type="love" on={this.props.handleEmojiClick}/>
+			<Emoji type="cry" on={this.props.handleEmojiClick}/>
+			<Emoji type="angry" on={this.props.handleEmojiClick}/>
+			<Emoji type="pout" on={this.props.handleEmojiClick}/>
+			<Emoji type="checks" on={this.props.handleEmojiClick}/>
+			<Emoji type="fear" on={this.props.handleEmojiClick}/>
+		</section>
+	);
 }
 
 

@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
 import SidebarComponent from './../../components/SidebarComponent/SidebarComponent';
+import SearchField from './../../components/SearchField/SearchField';
+
 import MenuBar from './../../components/MenuBar/MenuBar';
 
 import styles from './styles.module.css';
@@ -16,7 +18,9 @@ class Sidebar extends Component {
 		super(props);
 
 		this.state = {
-		    data: [],
+		    value: "",
+		    chats: [],
+		    users: [],
 		    worker: this.getSharedWorker()
 		};
 	};
@@ -42,6 +46,8 @@ class Sidebar extends Component {
 	onWorkerList (event) {
 		switch (event.data.retData) {
 			case 'users_list':
+				this.props.usr.users = [];
+
 				const user_id = getCookie('userID')
 				event.data.list.map(name => {
 					const u = name.user_id
@@ -49,9 +55,20 @@ class Sidebar extends Component {
 						this.props.usersList(name.user_id, name.nick)
 					}
 				})
+				this.setState({users: this.props.usr.users});
 				break;
 			case 'chats_list':
+				this.props.cht.chats = [];
 				event.data.list.map(dat => this.props.chatsList(dat.chat_id, dat.topic));
+				break;
+			case 'found_users':
+				this.props.usr.users = [];
+				event.data.list.result.map(data => this.props.usersList(data._source.user_id, data._source.nick));
+				// this.setState({users: this.props.usr.users});
+				break;
+			case 'found_chats':
+				this.props.cht.chats = [];
+				event.data.list.result.map(dat => this.props.chatsList(dat._source.chat_id, dat._source.topic));
 				break;
 			default:
 				break;
@@ -77,7 +94,41 @@ class Sidebar extends Component {
 		this.state.worker.then((worker) => {
 			worker.port.postMessage(req2);
 		});
-	}
+	};
+
+
+	handleChange(event) {
+		this.setState({value: event.target.value});
+	};
+
+	handleSubmit(event) {
+		if (this.props.match.params.view === "chats"){
+			event.preventDefault();
+			let userId = getCookie('userID');
+			let req3 = {
+				query: this.state.value,
+				userId: userId,
+				reqData: 'search_chats'
+			};
+			this.state.worker.then((worker) => {
+				worker.port.postMessage(req3);
+			});
+		}
+		if (this.props.match.params.view === "users"){
+			event.preventDefault();
+			let userId = getCookie('userID');
+			let req4 = {
+				query: this.state.value,
+				userId: userId,
+				reqData: 'search_users'
+			};
+			this.state.worker.then((worker) => {
+				worker.port.postMessage(req4);
+			});
+		}
+		this.setState({value: ''});
+	};
+
 
     render() {
 	    return (
@@ -88,6 +139,8 @@ class Sidebar extends Component {
 		    	:
 		    		<h1>Users</h1>
 		    	}
+
+		    	<SearchField handleSubmit={(event) => this.handleSubmit(event)} handleChange={(event) => this.handleChange(event)} value={this.state.value}/>
 
 		    	{(this.props.match.params.view === "chats" || this.props.match.params.view === "") ? 
 			    	this.props.cht.chats.map(chat => (
@@ -115,7 +168,9 @@ class Sidebar extends Component {
 const mapDispatchToProps = (dispatch) => {
     return  {
         usersList: (userId, name) => dispatch(actions.usersList(userId, name)),
-        chatsList: (id, topic) => dispatch(actions.chatList(id, topic))
+        chatsList: (id, topic) => dispatch(actions.chatList(id, topic)),
+        removeChatList: () => dispatch(actions.removeChatList()),
+        removeUsersList: () => dispatch(actions.removeUsersList())
     }
 };
 

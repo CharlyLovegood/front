@@ -56,7 +56,8 @@ class MessageList extends Component {
 
 
 	componentDidMount() {
-		this.props.RemoveMessage()
+		this.props.RemoveMessage();
+		this.props.msg.messages = [];
 		let req1 = {
 			chatId: this.props.match.params.chat_id,
 			reqData: 'get_messages'
@@ -77,7 +78,9 @@ class MessageList extends Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.props.match.params.chat_id !== prevProps.match.params.chat_id) {
-			this.props.RemoveMessage()
+			this.props.msg.messages = [];
+			this.props.RemoveMessage();
+
 			let req2 = {
 				chatId: this.props.match.params.chat_id,
 				reqData: 'get_messages'

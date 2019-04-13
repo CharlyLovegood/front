@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import * as actions from '../../store/actions'
-import { withRouter } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import ProfileCreateChatComponent from './../../components/ProfileCreateChatComponent/ProfileCreateChatComponent';
 
 import styles from './styles.module.css';
@@ -10,24 +7,41 @@ import workerCode from '../sharedWorker';
 import {getCookie} from '../cookie'
 
 
-class Profile extends Component {
-	constructor(props) {
-		super(props);
 
-		this.state = {
-		    data: [],
-		    value: '',
-		    worker: this.getSharedWorker()
-		};
+function Profile(props) {
+	const [value, setValue] = useState('');
+	const handleChange = (event) => {
+		setValue(event.target.value);
 	}
 
-	getSharedWorker () {
+	const [userProfile, setUserProfile] = useState([]);
+    useEffect (() => {
+		let req = {
+			userId: props.match.params.user_id,
+			reqData: 'get_user_info'
+		};
+		sharedWorker.then((worker) => {
+			worker.port.postMessage(req);
+		});	
+	}, [props.match.params.user_id]);
+
+	const onWorkerList  = (event) => {
+		switch (event.data.retData) {
+			case 'user_info':
+				setUserProfile([event.data.list.name, event.data.list.user_id, event.data.list.avatar]);
+				break;
+			default:
+				break;
+		}
+	};
+
+	const getSharedWorker = () => {
 		const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
 		return new Promise((res, rej) => {
 			const reader = new FileReader();
 			reader.addEventListener('loadend', (event) => {
 				const worker = new SharedWorker(event.target.result);
-				worker.port.addEventListener('message', this.onWorkerList.bind(this));
+				worker.port.addEventListener('message', onWorkerList.bind(this));
 				worker.port.start();
 				window.addEventListener('beforeunload', () => {
 					worker.port.postMessage('disconnect');
@@ -37,92 +51,41 @@ class Profile extends Component {
 			reader.addEventListener('error', rej);
 			reader.readAsDataURL(workerFile);
 		});
-	}
-
-	onWorkerList (event) {
-		switch (event.data.retData) {
-			case 'user_info':
-				this.setState({data: [event.data.list.name, event.data.list.user_id, event.data.list.avatar]})
-				break;
-			default:
-				break;
-		}
-	}
-
-
-    handleChange(event) {
-	    this.setState({value: event.target.value}) 
 	};
 
-
-	componentDidMount() {
-		let req = {
-			userId: this.props.match.params.user_id,
-			reqData: 'get_user_info'
-		}
-		this.state.worker.then((worker) => {
-			worker.port.postMessage(req);
-		});		
-	}	
-
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (this.props.match.params.user_id !== prevProps.match.params.user_id) {
-			let req = {
-				userId: this.props.match.params.user_id,
-				reqData: 'get_user_info'
-			};
-			
-			this.state.worker.then((worker) => {
-				worker.port.postMessage(req);
-			});
-		}	
-	}
+	const sharedWorker = getSharedWorker();
 
 
-	handleCreateChat(event) {
-		if (this.state.value !== '') {
+	const handleCreateChat = (event) => {
+		if (value !== '') {
 			event.preventDefault();
 			let userId = getCookie('userID');
 
 			let req1 = {
-				topic: this.state.value,
+				topic: value,
 				userIdReciever: userId,
-				userIdSender: this.props.match.params.user_id,
+				userIdSender: props.match.params.user_id,
 				reqData: 'create_chat'
 			}
 
-			this.state.worker.then((worker) => {
+			sharedWorker.then((worker) => {
 				worker.port.postMessage(req1);
 			});
 
-			this.setState({value: ''});		
+			setValue('');		
 		}
 	}
 
-	render() {
-		const alternativeURL = "https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif";
-		return(
-		    <section className={styles.profile}>	
-		    	<img alt="" className={styles.avatar} src={alternativeURL} />
-		        <h3>{this.state.data[0]}</h3>
-		        <ProfileCreateChatComponent value={this.state.value} handleCreateChat={(event) => this.handleCreateChat(event)} 
-		        													 handleChange={(event) => this.handleChange(event)}/>
-		    </section>
-		);
-	};
-}
 
-const mapStateToProps = state => {
-  return {
-    usr: state.usr,
-  }
-};
+	const alternativeURL = "https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif";
+	return(
+	    <section className={styles.profile}>	
+	    	<img alt="" className={styles.avatar} src={alternativeURL} />
+	        <h3>{userProfile[0]}</h3>
+	        <ProfileCreateChatComponent value={value} handleCreateChat={(event) => handleCreateChat(event)} 
+	        													 handleChange={(event) => handleChange(event)}/>
+	    </section>
+	);
+} 
 
-const mapDispatchToProps = (dispatch) => {
-  return  {
-    currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized)),
-  }
-};
-
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default Profile;

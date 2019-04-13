@@ -5,6 +5,64 @@ export default ((self) => {
 		ports.push(port);
 		port.addEventListener('message', (event) => {
 			switch (event.data.reqData) {
+				case 'search_users':
+					var data = {
+							jsonrpc: '2.0', 
+							method: 'search_users', 
+							params: {"user_id": event.data.userId, "query": event.data.query}, 
+							id: '1'
+					};
+
+					var request = {
+					    method: 'POST',
+					    body: JSON.stringify(data),
+					    headers: {
+							'Access-Control-Allow-Origin':'*',
+							"Content-Type": "application/json",
+						},
+					};
+
+					fetch('http://127.0.0.1:5000/api',request)
+							.then(function(response)  {
+								return response.json();
+							})
+							.then(data => {
+								var answ = {
+									retData: 'found_users',
+									list: data
+								};
+								port.postMessage(answ);
+							})	
+					break;
+				case 'search_chats':
+					var data = {
+							jsonrpc: '2.0', 
+							method: 'search_chats', 
+							params: {"user_id": event.data.userId, "query": event.data.query}, 
+							id: '1'
+					};
+
+					var request = {
+					    method: 'POST',
+					    body: JSON.stringify(data),
+					    headers: {
+							'Access-Control-Allow-Origin':'*',
+							"Content-Type": "application/json",
+						},
+					};
+
+					fetch('http://127.0.0.1:5000/api',request)
+							.then(function(response)  {
+								return response.json();
+							})
+							.then(data => {
+								var answ = {
+									retData: 'found_chats',
+									list: data
+								};
+								port.postMessage(answ);
+							})	
+					break;
 				case 'login_user':
 					var data = {
 							jsonrpc: '2.0', 
@@ -233,7 +291,7 @@ export default ((self) => {
 				case 'users_list':
 					var data = {
 						jsonrpc: '2.0', 
-						method: 'search_users', 
+						method: 'users_list', 
 						params: {}, 
 						id: '1',
 					};
@@ -263,7 +321,7 @@ export default ((self) => {
 				case 'chats_list':
 					var data = {
 							jsonrpc: '2.0', 
-							method: 'search_chats', 
+							method: 'chats_list', 
 							params: {"user_id": event.data.userId, "topic": ""}, 
 							id: '1',
 					};
