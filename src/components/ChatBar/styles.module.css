@@ -5,6 +5,7 @@
     border-color: #e9e5ed;
     border-style: solid;
     display: flex;
+    min-height: fit-content;
 }
 
 .menu_label {

@@ -118,15 +118,17 @@ class MessageList extends Component {
 	render() {
 		return(
 		    <section className={styles.messages_list}>
-		    	<ChatBar member={this.state.chat_member}/>		       
-		        <div className={styles.messages_box}>
-		            {this.props.msg.messages ? this.props.msg.messages.map(message => (
-		                <Message handleEmoji={this.handleEmoji}
-		                    key={message.id}
-		                    {...message}
-		                />
-		        )) : console.log('')}
-		        </div>
+		    	<ChatBar member={this.state.chat_member}/>	
+		    	<div className={styles.message_scroll_container}>	       
+			        <div className={styles.messages_box}>
+			            {this.props.msg.messages ? this.props.msg.messages.map(message => (
+			                <Message handleEmoji={this.handleEmoji}
+			                    key={message.id}
+			                    {...message}
+			                />
+			        )) : console.log('')}
+			        </div>
+			    </div>
 		    </section>
 		);
 	};

@@ -134,11 +134,6 @@ class Sidebar extends Component {
 	    return (
 			<aside className={styles.sidebar}>
 				<MenuBar />
-		    	{this.props.match.params.view === "chats" ?
-		    		<h1>Chats</h1>
-		    	:
-		    		<h1>Users</h1>
-		    	}
 
 		    	<SearchField handleSubmit={(event) => this.handleSubmit(event)} handleChange={(event) => this.handleChange(event)} value={this.state.value}/>
 

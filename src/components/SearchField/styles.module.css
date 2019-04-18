@@ -1,5 +1,6 @@
 .search_component{
-
+	align-self: center;
+    margin: 20px;
 }
 
 .search {

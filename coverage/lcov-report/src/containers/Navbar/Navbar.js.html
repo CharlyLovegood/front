@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/containers/Navbar/Navbar.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/containers/Navbar</a> Navbar.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/43</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/43</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import React, { Component } from 'react';</span>
+<span class="cstat-no" title="statement not covered" >import {connect} from 'react-redux';</span>
+<span class="cstat-no" title="statement not covered" >import * as actions from '../../store/actions';</span>
+<span class="cstat-no" title="statement not covered" >import { Link } from 'react-router-dom';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >import styles from './styles.module.css';</span>
+<span class="cstat-no" title="statement not covered" >import workerCode from '../sharedWorker';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >import {getCookie} from '../cookie'</span>
+import {deleteCookie} from '../cookie'
+&nbsp;
+&nbsp;
+class Navbar extends Component <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >{</span></span>
+    state = {
+        value: '',
+        worker: this.getSharedWorker()
+    };
+&nbsp;
+<span class="fstat-no" title="function not covered" >    getSharedWorker</span> () {
+        const workerFile = <span class="cstat-no" title="statement not covered" >new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});</span>
+<span class="cstat-no" title="statement not covered" >        return new Promise(<span class="fstat-no" title="function not covered" >(r</span>es, rej) =&gt; {</span>
+            const reader = <span class="cstat-no" title="statement not covered" >new FileReader();</span>
+<span class="cstat-no" title="statement not covered" >            reader.addEventListener('loadend', (<span class="fstat-no" title="function not covered" >event) =&gt; {</span></span>
+                const worker = <span class="cstat-no" title="statement not covered" >new SharedWorker(event.target.result);</span>
+<span class="cstat-no" title="statement not covered" >                worker.port.addEventListener('message', this.onWorkerList.bind(this));</span>
+<span class="cstat-no" title="statement not covered" >                worker.port.start();</span>
+<span class="cstat-no" title="statement not covered" >                window.addEventListener('beforeunload', <span class="fstat-no" title="function not covered" >() =&gt; </span>{</span>
+<span class="cstat-no" title="statement not covered" >                    worker.port.postMessage('disconnect');</span>
+                });
+<span class="cstat-no" title="statement not covered" >                res(worker);</span>
+            });
+<span class="cstat-no" title="statement not covered" >            reader.addEventListener('error', rej);</span>
+<span class="cstat-no" title="statement not covered" >            reader.readAsDataURL(workerFile);</span>
+        });
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    onWorkerList</span> (event) {
+<span class="cstat-no" title="statement not covered" >        switch (event.data.retData) {</span>
+            case 'current_user_info':
+<span class="cstat-no" title="statement not covered" >                this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true);</span>
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            default:
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    componentDidMount</span>() {
+        let req = <span class="cstat-no" title="statement not covered" >{</span>
+            userId: getCookie('userID'),
+            reqData: 'get_current_user_info'
+        }
+<span class="cstat-no" title="statement not covered" >        this.state.worker.then((<span class="fstat-no" title="function not covered" >worker) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >            worker.port.postMessage(req);</span>
+        });     
+    }   
+&nbsp;
+<span class="fstat-no" title="function not covered" >    logOut</span>(event){
+<span class="cstat-no" title="statement not covered" >        deleteCookie('token');</span>
+<span class="cstat-no" title="statement not covered" >        deleteCookie('userID');</span>
+<span class="cstat-no" title="statement not covered" >        this.props.removeCurrentUser();</span>
+<span class="cstat-no" title="statement not covered" >        this.props.history.push("/login");</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    render</span>() {
+        let avatarLabelURL = <span class="cstat-no" title="statement not covered" >this.props.usr.currentUser.avatar;</span>
+<span class="cstat-no" title="statement not covered" >        if (this.props.usr.currentUser.avatar == undefined) {</span>
+<span class="cstat-no" title="statement not covered" >            avatarLabelURL = require("../../icons/user7.png");</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return (</span>
+            &lt;nav className={styles.navbar}&gt;
+                &lt;div className={styles.user}&gt;
+                    &lt;img alt="avatar" className={styles.avatar} src={avatarLabelURL} /&gt;
+                    &lt;div className={styles.phrase}&gt;
+                        &lt;p className={styles.string}&gt;Hello!&lt;/p&gt;
+                        &lt;p className={styles.string}&gt;{this.props.usr.currentUser.userName}&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div className={styles.logo_container}&gt;
+                    &lt;img alt="logo" className={styles.logo} src="https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif"/&gt;
+                &lt;/div&gt;
+                &lt;div className={styles.log_out}&gt;
+                    &lt;Link className={styles.log_out} to='/login' onClick={(<span class="fstat-no" title="function not covered" >event) =&gt; <span class="cstat-no" title="statement not covered" >this.logOut(event)}&gt;Log Out&lt;/Link&gt;</span></span>
+                &lt;/div&gt;
+            &lt;/nav&gt;
+        );
+    };
+}
+&nbsp;
+const mapDispatchToProps = (<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >dispatch) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >    return    {</span>
+        usersList: <span class="fstat-no" title="function not covered" >(u</span>serId, name) =&gt; <span class="cstat-no" title="statement not covered" >dispatch(actions.currentUser()),</span>
+        currentUser: <span class="fstat-no" title="function not covered" >(u</span>serId, userName, avatar, isAuthorized) =&gt; <span class="cstat-no" title="statement not covered" >dispatch(actions.currentUser(userId, userName, avatar, isAuthorized)),</span>
+        removeCurrentUser: <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" ></span>dispatch(</span>actions.removeCurrentUser()),
+    }
+};
+&nbsp;
+const mapStateToProps = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >state</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+        usr: state.usr
+    }
+};
+&nbsp;
+&nbsp;
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Apr 18 2019 21:12:24 GMT+0300 (MSK)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
