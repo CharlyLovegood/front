@@ -4,7 +4,6 @@
     flex-direction: column;
 }
 
-
 #container{
     background: #e4e1e000;
     display: flex;
@@ -28,9 +27,6 @@
     margin-right: 20px;
 }
 
-
-
-
 .chat-list {
     display: flex;
     flex-direction: column;
@@ -46,8 +42,6 @@ ul p img {
     max-width: 100%;
 }
 
-
-
 #container {
     font-size: 20px;
 }
@@ -55,7 +49,6 @@ ul p img {
 a {
     text-decoration: none;
 }
-
 
 textarea {
     font-size: x-large;
@@ -67,48 +60,56 @@ i.smile{
     width: 32px;
     background: url(people32/slightly-smiling-face.png?sprite);
 }
+
 i.laugh {
     display: block; 
     height: 32px;
     width: 32px;
     background: url(people32/grinning-face-with-smiling-eyes.png?sprite);
 }
+
 i.cry {
     display: block; 
     height: 32px;
     width: 32px;
     background: url(people32/loudly-crying-face.png?sprite);
 }
+
 i.angry {
     display: block; 
     height: 32px;
     width: 32px;
     background: url(people32/angry-face.png?sprite);
 }
+
 i.kiss {
     display: block; 
     height: 32px;
     width: 32px;
     background: url(people32/face-blowing-a-kiss.png?sprite);
 }
+
 i.love {
     display: block; 
     height: 32px;
     width: 32px;
     background: url(people32/smiling-face-with-heart-eyes.png?sprite);
 }
+
 i.pout {
     display: block; 
     height: 32px;
     width: 32px;
     background: url(people32/pouting-face.png?sprite);
 }
+
 i.fear {
     display: block; 
     height: 32px;
     width: 32px;
     background: url(people32/anxious-face-with-sweat.png?sprite);
 }
+
 i.checks {
     display: block; 
     height: 32px;

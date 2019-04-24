@@ -77,10 +77,10 @@ function Profile(props) {
 	}
 
 
-	const alternativeURL = "https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif";
+	const alternativeURL = 'https://cdn.dribbble.com/users/31664/screenshots/3225538/dribbble-meetup-mnemonic.gif';
 	return(
 	    <section className={styles.profile}>	
-	    	<img alt="" className={styles.avatar} src={alternativeURL} />
+	    	<img alt='' className={styles.avatar} src={alternativeURL} />
 	        <h3>{userProfile[0]}</h3>
 	        <ProfileCreateChatComponent value={value} handleCreateChat={(event) => handleCreateChat(event)} 
 	        													 handleChange={(event) => handleChange(event)}/>

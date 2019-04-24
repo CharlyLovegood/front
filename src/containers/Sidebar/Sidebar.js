@@ -18,7 +18,7 @@ class Sidebar extends Component {
 		super(props);
 
 		this.state = {
-		    value: "",
+		    value: '',
 		    chats: [],
 		    users: [],
 		    worker: this.getSharedWorker()
@@ -102,7 +102,7 @@ class Sidebar extends Component {
 	};
 
 	handleSubmit(event) {
-		if (this.props.match.params.view === "chats"){
+		if (this.props.match.params.view === 'chats'){
 			event.preventDefault();
 			let userId = getCookie('userID');
 			let req3 = {
@@ -114,7 +114,7 @@ class Sidebar extends Component {
 				worker.port.postMessage(req3);
 			});
 		}
-		if (this.props.match.params.view === "users"){
+		if (this.props.match.params.view === 'users'){
 			event.preventDefault();
 			let userId = getCookie('userID');
 			let req4 = {
@@ -137,9 +137,9 @@ class Sidebar extends Component {
 
 		    	<SearchField handleSubmit={(event) => this.handleSubmit(event)} handleChange={(event) => this.handleChange(event)} value={this.state.value}/>
 
-		    	{(this.props.match.params.view === "chats" || this.props.match.params.view === "") ? 
+		    	{(this.props.match.params.view === 'chats' || this.props.match.params.view === '') ? 
 			    	this.props.cht.chats.map(chat => (
-			                <Link key={chat.id} to={"/chats/chat_id=" + (chat.id)}>
+			                <Link key={chat.id} to={'/chats/chat_id=' + (chat.id)}>
 				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.id}
 				                    {...chat}
 				                />
@@ -147,7 +147,7 @@ class Sidebar extends Component {
 			        ))
 		        :
 			    	this.props.usr.users.map(user => (
-			                <Link key={user.userId} to={"/users/user_id=" + (user.userId)}>
+			                <Link key={user.userId} to={'/users/user_id=' + (user.userId)}>
 				                <SidebarComponent path={this.props.location.pathname.split('=')} id = {user.userId}
 				                    {...user}
 				                

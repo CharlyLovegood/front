@@ -3,10 +3,10 @@ import * as types from './actionTypes'
 let nextMessageId = 0
 
 
-export const addMessage = (message, author, chatId, filename, url, date) => ({
+export const addMessage = (id, message, author, chatId, filename, url, date) => ({
     type: types.ADD_MESSAGE,
     payload: {
-        id: nextMessageId++,  //to do. add real id from back
+        id,  //to do. add real id from back
         chatId,
         message,
         author,

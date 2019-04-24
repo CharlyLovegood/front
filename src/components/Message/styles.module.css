@@ -39,6 +39,31 @@
     align-items: flex-end;
 }
 
+.text_container {
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.ogImg {
+    height: 200px;
+}
+
+.ogTitle {
+    margin: 0px 10px;
+}
+
+.ogDesc {
+    margin: 10px 10px;
+}
+
+.img {
+    width: 100%;
+}
+
 @keyframes appear {
     0% {
         opacity: 0;

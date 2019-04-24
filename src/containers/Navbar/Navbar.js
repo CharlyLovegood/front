@@ -37,6 +37,7 @@ class Navbar extends Component {
     onWorkerList (event) {
         switch (event.data.retData) {
             case 'current_user_info':
+                console.log('usrt')
                 this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true);
                 break;
             default:
@@ -58,25 +59,25 @@ class Navbar extends Component {
         deleteCookie('token');
         deleteCookie('userID');
         this.props.removeCurrentUser();
-        this.props.history.push("/login");
+        this.props.history.push('/login');
     }
 
     render() {
         let avatarLabelURL = this.props.usr.currentUser.avatar;
         if (this.props.usr.currentUser.avatar == undefined) {
-            avatarLabelURL = require("../../icons/user7.png");
+            avatarLabelURL = require('../../icons/user7.png');
         }
         return (
             <nav className={styles.navbar}>
                 <div className={styles.user}>
-                    <img alt="avatar" className={styles.avatar} src={avatarLabelURL} />
+                    <img alt='avatar' className={styles.avatar} src={avatarLabelURL} />
                     <div className={styles.phrase}>
                         <p className={styles.string}>Hello!</p>
                         <p className={styles.string}>{this.props.usr.currentUser.userName}</p>
                     </div>
                 </div>
                 <div className={styles.logo_container}>
-                    <img alt="logo" className={styles.logo} src="https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif"/>
+                    <img alt='logo' className={styles.logo} src='https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif'/>
                 </div>
                 <div className={styles.log_out}>
                     <Link className={styles.log_out} to='/login' onClick={(event) => this.logOut(event)}>Log Out</Link>

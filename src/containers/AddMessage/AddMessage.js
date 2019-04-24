@@ -15,9 +15,9 @@ import {getCookie} from '../cookie'
 
 class AddMessage extends Component {
     state = {
+        messageId: 0,
         value: '',
         showEmojiViewer: false,
-        emojiWasMentioned: false,
         worker: this.getSharedWorker()
     };
 
@@ -60,27 +60,21 @@ class AddMessage extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.value !== '' && this.state.emojiWasMentioned === false) {
-            let userId = getCookie('userID');
+        let userId = getCookie('userID');
 
-            let req = {
-                userId: userId,
-                txt: this.state.value,
-                chatId: this.props.match.params.chat_id,
-                reqData: 'post_message'
-            }
+        let req = {
+            userId: userId,
+            txt: this.state.value,
+            chatId: this.props.match.params.chat_id,
+            reqData: 'post_message'
+        }
 
-            this.state.worker.then((worker) => {
-                worker.port.postMessage(req);
-            });
+        this.state.worker.then((worker) => {
+            worker.port.postMessage(req);
+        });
 
-            this.props.AddMessage(this.state.value, 'Me', 63, "text", null);
-            this.setState({value: ''});
-        } 
-        if (this.state.value !== '' && this.state.emojiWasMentioned === true) {
-            this.props.AddMessage(this.state.value, 'Me', 63, "text", null);
-            this.setState({value: ''});
-        }        
+        this.props.AddMessage(this.state.messageId++, this.state.value, 'Me', 63, 'text', null);
+        this.setState({value: ''});     
     };
 
     fileUpload(event) {
@@ -104,11 +98,12 @@ class AddMessage extends Component {
 
 
     handleFileUpload(event) {
+        console.log(event)
         this.fileUpload(event).then((result) => {
             if (result.length > 1000)
-                this.props.AddMessage('', 'Me', 63, 'img', result);
+                this.props.AddMessage(this.state.messageId++, '', 'Me', 63, 'img', result);
             else
-                this.props.AddMessage(result, 'Me', 63, 'text', null);
+                this.props.AddMessage(this.state.messageId++, result, 'Me', 63, 'text', null);
 
         });
     };
@@ -129,7 +124,7 @@ class AddMessage extends Component {
 
     handleGeoposition() {
         this.geoposition().then(result => {
-        this.props.AddMessage('My latitude is ' + result.coords.latitude, 'Me', 63, null, null)            
+        this.props.AddMessage(this.state.messageId++, 'My latitude is ' + result.coords.latitude, 'Me', 63, null, null)            
     })};
 
 
@@ -139,15 +134,14 @@ class AddMessage extends Component {
 
 
     handleEmojiClick = (emojiCode) => {
-        this.setState({emojiWasMentioned: true});
-        this.setState({value: this.state.value + "::" + emojiCode + "::"}) 
+        this.setState({value: this.state.value + '::' + emojiCode + '::'}) 
     };
 
 
 
     render() {
         return (
-            <div id={styles["AddMessage-div"]}>
+            <div id={styles['AddMessage-div']}>
                 {this.state.showEmojiViewer === true ? <EmojiViewer handleEmojiClick={this.handleEmojiClick}/> : <div />}
                 <MessageForm value={this.state.value} handleSubmit={(event) => this.handleSubmit(event)} 
                                                         handleFileUpload={(event) => this.handleFileUpload(event)} 
@@ -163,7 +157,7 @@ class AddMessage extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return    {
-        AddMessage: (message, author, chatId, filename, url) => dispatch(actions.addMessage(message, author, chatId, filename, url))
+        AddMessage: (id, message, author, chatId, filename, url) => dispatch(actions.addMessage(id, message, author, chatId, filename, url))
     }
 };
 
