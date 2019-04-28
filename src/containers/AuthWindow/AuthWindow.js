@@ -40,8 +40,9 @@ class AuthWindow extends Component {
     onWorkerList (event) {
         switch (event.data.retData) {
             case 'user_handle_login':
+                console.log(event.data)
                 if (event.data.list.result.user_id != undefined){
-                    this.props.currentUser(event.data.list.result.user_id, "test", null, true);
+                    this.props.currentUser(event.data.list.result.user_id, 'test', null, true);
                     setCookie('userID', event.data.list.result.user_id);
                     setCookie('token', event.data.list.result.token);
                     this.props.currentUser(event.data.list.result.user_id, null, null, true);
@@ -79,9 +80,9 @@ class AuthWindow extends Component {
                     <p>Please Log In</p>
                     <AuthFields email={this.state.email} password={this.state.password} handleChangeEmail={(event) => this.handleChangeEmail(event)}
                                                                                         handleChangePassword={(event) => this.handleChangePassword(event)}></AuthFields >
-                    <Link to="/users" className={styles.button} onClick={(event) => this.handleLogin(event)}> Log in </Link>
-                    <Link to="/register" className={styles.link} > Register </Link>
-                    <a href="http://127.0.0.1:5000/" className={styles.google_button}> g+ </a>
+                    <Link to='/users' className={styles.button} onClick={(event) => this.handleLogin(event)}> Log in </Link>
+                    <Link to='/register' className={styles.link} > Register </Link>
+                    <a href='http://127.0.0.1:5000/' className={styles.google_button}> g+ </a>
                 </div>
         );
     };

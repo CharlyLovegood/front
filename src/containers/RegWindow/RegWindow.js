@@ -81,7 +81,7 @@ function AuthWindow() {
                                                                                 handleChangeNick={(event) => handleChangeNick(event)}
                                                                                 handleChangeEmail={(event) => handleChangeEmail(event)}
                                                                                 handleChangePassword={(event) => handleChangePassword(event)}></RegFields >
-            <a href="http://127.0.0.1:3000/login" className={styles.button} onClick={(event) => handleRegistration(event)}> Register </a>
+            <a href='http://127.0.0.1:3000/login' className={styles.button} onClick={(event) => handleRegistration(event)}> Register </a>
         </div>
     );
 }

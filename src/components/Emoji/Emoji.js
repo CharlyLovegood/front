@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 const emoji = props => {
   return (
-    <i className={styles[props.type] + " " + styles.emoji} onClick={() => {props.on(props.type)}}></i>
+    <i className={styles[props.type] + ' ' + styles.emoji} onClick={() => {props.on(props.type)}}></i>
   );
 }
 

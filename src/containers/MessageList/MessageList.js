@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Message from './../../components/Message/Message';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 
 import ChatBar from './../../components/ChatBar/ChatBar';
 
@@ -43,26 +43,33 @@ class MessageList extends Component {
 
 	onWorkerMessageList (event) {
 		if (event.data.retData === 'chat_member_info') {
-			this.setState({chat_member: event.data.list}) 
+			this.setState({chat_member: event.data.list}); 
+		}
+		if (event.data.retData === 'service_outcome') {
+			console.log(event.data); 
 		}
 		if (event.data.retData === 'messages_list') {
+			console.log('return message list')
 			event.data.list.map(mes => {
-				let reciever = "";
-				mes.author == getCookie('userID') ? reciever = 'Me' : reciever = "ForMe";
-				this.props.AddMessage(mes.content, reciever, this.props.match.params.chat_id, null, null, mes.added_at)
+				let reciever = '';
+				mes.author == getCookie('userID') ? reciever = 'Me' : reciever = 'ForMe';
+				console.log(mes)
+				this.props.AddMessage(mes.message_id, mes.content, reciever, this.props.match.params.chat_id, null, null, mes.added_at)
 			});
 		}
 	}
 
 
 	componentDidMount() {
+		console.log('componentDidMount')
 		this.props.RemoveMessage();
-		this.props.msg.messages = [];
+		//this.props.msg.messages = [];
 		let req1 = {
 			chatId: this.props.match.params.chat_id,
 			reqData: 'get_messages'
 		}
 		this.state.worker.then((worker) => {
+			console.log('ask for message list')
 			worker.port.postMessage(req1);
 		});
 
@@ -78,7 +85,7 @@ class MessageList extends Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.props.match.params.chat_id !== prevProps.match.params.chat_id) {
-			this.props.msg.messages = [];
+			//this.props.msg.messages = [];
 			this.props.RemoveMessage();
 
 			let req2 = {
@@ -97,36 +104,49 @@ class MessageList extends Component {
 			this.state.worker.then((worker) => {
 				worker.port.postMessage(req4);
 			});
-		}
-				
+		}			
 	}
 
-	handleEmoji(txt) {
+	handleEmoji = (txt) => {
 		if (txt !== undefined) {
-			if (txt.indexOf("::") === -1) {
-				return {__html: txt};
-			}
-			if (txt.indexOf("::") !== -1) {
+			if (txt.indexOf('::') !== -1) {
 				let re = /::(\w+)::/gi;
 				let newstr = txt.replace(re, ' <i class="$1"></i> ');			
 				return {__html: newstr};
 			}
+			return {__html: txt};
 		}
 	}
 	
 
+
+	handlePreview = (txt) => {
+		if (txt !== undefined) {
+			const re = /((http(s)?:\/\/)|(www\.))([^\.]+)\.([^\s]+)/i;
+			let match = txt.match(re);
+			
+			if (match !== null) {
+				let url = match[0];
+				return [true, url];
+			}
+		}
+		return [false, undefined];
+	}
+
 	render() {
 		return(
 		    <section className={styles.messages_list}>
-		    	<ChatBar member={this.state.chat_member}/>		       
-		        <div className={styles.messages_box}>
-		            {this.props.msg.messages ? this.props.msg.messages.map(message => (
-		                <Message handleEmoji={this.handleEmoji}
-		                    key={message.id}
-		                    {...message}
-		                />
-		        )) : console.log('')}
-		        </div>
+		    	<ChatBar member={this.state.chat_member}/>	
+		    	<div className={styles.message_scroll_container}>	       
+			        <div className={styles.messages_box}>
+			            {this.props.msg.messages ? this.props.msg.messages.map(message => (
+			                <Message handleEmoji={this.handleEmoji} linkPreview={this.handlePreview(message.message)}
+			                    key={message.id}
+			                    {...message}
+			                />
+			        )) : console.log('')}
+			        </div>
+			    </div>
 		    </section>
 		);
 	};
@@ -141,10 +161,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return  {
-    	AddMessage: (message, author, chatId, filename, url, date) => dispatch(actions.addMessage(message, author, chatId, filename, url, date)),
+    	AddMessage: (id, message, author, chatId, filename, url, date) => dispatch(actions.addMessage(id, message, author, chatId, filename, url, date)),
         currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized)),
     	RemoveMessage: () => dispatch(actions.removeMessage()),
-  
     }
 };
 

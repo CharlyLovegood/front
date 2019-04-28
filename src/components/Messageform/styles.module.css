@@ -30,3 +30,7 @@ button {
     background-color: #ffffffa1;
     border: none;
 }
+
+.attach {
+    display: none;
+}
