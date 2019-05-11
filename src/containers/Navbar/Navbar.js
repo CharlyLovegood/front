@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import {getCookie} from '../cookie'
 import {deleteCookie} from '../cookie'
 
 
-class Navbar extends Component {
+class Navbar extends PureComponent {
     state = {
         value: '',
         worker: this.getSharedWorker()
@@ -37,7 +37,6 @@ class Navbar extends Component {
     onWorkerList (event) {
         switch (event.data.retData) {
             case 'current_user_info':
-                console.log('usrt')
                 this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true);
                 break;
             default:
@@ -97,7 +96,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
     return {
-        usr: state.usr
+        usr: state.usr.toJS()
     }
 };
 

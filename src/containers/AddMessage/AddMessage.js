@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import MessageForm from './../../components/Messageform/Messageform';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
@@ -13,7 +13,7 @@ import {getCookie} from '../cookie'
 
 
 
-class AddMessage extends Component {
+class AddMessage extends PureComponent {
     state = {
         messageId: 0,
         value: '',
@@ -73,8 +73,9 @@ class AddMessage extends Component {
             worker.port.postMessage(req);
         });
 
-        this.props.AddMessage(this.state.messageId++, this.state.value, 'Me', 63, 'text', null);
-        this.setState({value: ''});     
+        this.props.AddMessage(this.state.messageId, this.state.value, 'Me', 63, 'text', null);
+        this.setState({value: ''}); 
+        this.setState({messageId: this.state.messageId+1});     
     };
 
     fileUpload(event) {
@@ -98,13 +99,15 @@ class AddMessage extends Component {
 
 
     handleFileUpload(event) {
-        console.log(event)
         this.fileUpload(event).then((result) => {
-            if (result.length > 1000)
-                this.props.AddMessage(this.state.messageId++, '', 'Me', 63, 'img', result);
-            else
-                this.props.AddMessage(this.state.messageId++, result, 'Me', 63, 'text', null);
-
+            if (result.length > 1000) {
+                this.props.AddMessage(this.state.messageId, '', 'Me', 63, 'img', result);
+                this.setState({messageId: this.state.messageId+1}); 
+            }
+            else {
+                this.props.AddMessage(this.state.messageId, result, 'Me', 63, 'text', null);
+                this.setState({messageId: this.state.messageId+1}); 
+            }
         });
     };
 
@@ -124,7 +127,8 @@ class AddMessage extends Component {
 
     handleGeoposition() {
         this.geoposition().then(result => {
-        this.props.AddMessage(this.state.messageId++, 'My latitude is ' + result.coords.latitude, 'Me', 63, null, null)            
+        this.props.AddMessage(this.state.messageId, 'My latitude is ' + result.coords.latitude, 'Me', 63, null, null)            
+        this.setState({messageId: this.state.messageId+1});
     })};
 
 

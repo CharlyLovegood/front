@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Message from './../../components/Message/Message';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
@@ -11,7 +11,7 @@ import workerCode from '../sharedWorker';
 
 import {getCookie} from '../cookie'
 
-class MessageList extends Component {
+class MessageList extends PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -45,15 +45,10 @@ class MessageList extends Component {
 		if (event.data.retData === 'chat_member_info') {
 			this.setState({chat_member: event.data.list}); 
 		}
-		if (event.data.retData === 'service_outcome') {
-			console.log(event.data); 
-		}
 		if (event.data.retData === 'messages_list') {
-			console.log('return message list')
 			event.data.list.map(mes => {
 				let reciever = '';
 				mes.author == getCookie('userID') ? reciever = 'Me' : reciever = 'ForMe';
-				console.log(mes)
 				this.props.AddMessage(mes.message_id, mes.content, reciever, this.props.match.params.chat_id, null, null, mes.added_at)
 			});
 		}
@@ -61,15 +56,12 @@ class MessageList extends Component {
 
 
 	componentDidMount() {
-		console.log('componentDidMount')
 		this.props.RemoveMessage();
-		//this.props.msg.messages = [];
 		let req1 = {
 			chatId: this.props.match.params.chat_id,
 			reqData: 'get_messages'
 		}
 		this.state.worker.then((worker) => {
-			console.log('ask for message list')
 			worker.port.postMessage(req1);
 		});
 
@@ -139,7 +131,7 @@ class MessageList extends Component {
 		    	<ChatBar member={this.state.chat_member}/>	
 		    	<div className={styles.message_scroll_container}>	       
 			        <div className={styles.messages_box}>
-			            {this.props.msg.messages ? this.props.msg.messages.map(message => (
+			            {this.props.msg ? this.props.msg.map(message => (
 			                <Message handleEmoji={this.handleEmoji} linkPreview={this.handlePreview(message.message)}
 			                    key={message.id}
 			                    {...message}

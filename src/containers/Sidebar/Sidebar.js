@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
@@ -12,15 +12,12 @@ import workerCode from '../sharedWorker';
 
 import {getCookie} from '../cookie'
 
-
-class Sidebar extends Component {
+class Sidebar extends PureComponent {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 		    value: '',
-		    chats: [],
-		    users: [],
 		    worker: this.getSharedWorker()
 		};
 	};
@@ -47,7 +44,6 @@ class Sidebar extends Component {
 		switch (event.data.retData) {
 			case 'users_list':
 				this.props.usr.users = [];
-
 				const user_id = getCookie('userID')
 				event.data.list.map(name => {
 					const u = name.user_id
@@ -55,19 +51,14 @@ class Sidebar extends Component {
 						this.props.usersList(name.user_id, name.nick)
 					}
 				})
-				this.setState({users: this.props.usr.users});
 				break;
 			case 'chats_list':
-				this.props.cht.chats = [];
 				event.data.list.map(dat => this.props.chatsList(dat.chat_id, dat.topic));
 				break;
 			case 'found_users':
-				this.props.usr.users = [];
 				event.data.list.result.map(data => this.props.usersList(data._source.user_id, data._source.nick));
-				// this.setState({users: this.props.usr.users});
 				break;
 			case 'found_chats':
-				this.props.cht.chats = [];
 				event.data.list.result.map(dat => this.props.chatsList(dat._source.chat_id, dat._source.topic));
 				break;
 			default:
@@ -138,7 +129,7 @@ class Sidebar extends Component {
 		    	<SearchField handleSubmit={(event) => this.handleSubmit(event)} handleChange={(event) => this.handleChange(event)} value={this.state.value}/>
 
 		    	{(this.props.match.params.view === 'chats' || this.props.match.params.view === '') ? 
-			    	this.props.cht.chats.map(chat => (
+			    	this.props.cht.map(chat => (
 			                <Link key={chat.id} to={'/chats/chat_id=' + (chat.id)}>
 				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.id}
 				                    {...chat}
@@ -171,8 +162,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
     return {
-        usr: state.usr,
-        cht: state.cht
+        usr: state.usr.toJS(),
+        cht: state.cht.toJS()
     }
 };
 

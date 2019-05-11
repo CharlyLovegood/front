@@ -1,31 +1,26 @@
 import * as actionTypes from '../actions/actionTypes';
+import { List, Map, toJS } from 'immutable';
+
+const initialState = Map({
+    users: List(),
+    currentUser: [] 
+})
 
 
-const initialState = {
-    users: [],
-    currentUser: []
-};
-
-const users = (state = [], action) => {
+const users = (state = initialState, action) => {
     switch (action.type) {
         case 'USERS_LIST':
-            return {
-                ...state, 
-                users: [...state.users, action.payload]
-            };
+            return state.update('users', (users) => users.push(action.payload));
         default:
             return state;
     }
 };
 
 
-const currentUser = (state = [], action) => {
+const currentUser = (state = initialState, action) => {
     switch (action.type) {
         case 'CURRENT_USER':
-            return {
-                ...state, 
-                currentUser: action.payload
-            };
+            return state.update('currentUser', (currentUser) => action.payload);
         default:
             return state;
     }

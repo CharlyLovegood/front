@@ -88,7 +88,3 @@ function AuthWindow() {
 
 
 export default AuthWindow;
-
-
-
-

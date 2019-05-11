@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import workerCode from '../sharedWorker';
 import AuthFields from './../../components/AuthFields/AuthFields';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import styles from './styles.module.css';
 import {setCookie} from '../cookie'
 
-class AuthWindow extends Component {
+class AuthWindow extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,7 +40,6 @@ class AuthWindow extends Component {
     onWorkerList (event) {
         switch (event.data.retData) {
             case 'user_handle_login':
-                console.log(event.data)
                 if (event.data.list.result.user_id != undefined){
                     this.props.currentUser(event.data.list.result.user_id, 'test', null, true);
                     setCookie('userID', event.data.list.result.user_id);

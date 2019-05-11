@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import Emoji from './../../components/Emoji/Emoji';
 
 import styles from './styles.module.css';
 
-class EmojiViewer extends Component {
+class EmojiViewer extends PureComponent {
 	render() {
 		return(
 			<section className={styles.emoji_viewer}>

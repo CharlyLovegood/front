@@ -1,17 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
+import { List, toJS } from 'immutable';
 
+const initialState = List()
 
-const initialState = {
-    chats: []
-};
-
-const chats = (state = [], action) => {
+const chats = (state = initialState, action) => {
     switch (action.type) {
         case 'CHAT_LIST':
-            return {
-                ...state, 
-                chats: [...state.chats, action.payload]
-            };
+            return state.push(action.payload);
         default:
             return state;
     }
