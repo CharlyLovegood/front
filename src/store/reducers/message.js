@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { List, Map, toJS } from 'immutable';
+import { List } from 'immutable';
 
 const initialState = List()
 

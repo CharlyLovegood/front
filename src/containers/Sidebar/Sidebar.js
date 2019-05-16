@@ -20,6 +20,25 @@ class Sidebar extends PureComponent {
 		    value: '',
 		    worker: this.getSharedWorker()
 		};
+
+		let userId = getCookie('userID');
+
+		let req1 = {
+			userId: userId,
+			reqData: 'users_list'
+		}
+
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req1);
+		});
+
+		let req2 = {
+			userId: userId,
+			reqData: 'chats_list'
+		}
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req2);
+		});
 	};
 
 	getSharedWorker () {
@@ -43,7 +62,6 @@ class Sidebar extends PureComponent {
 	onWorkerList (event) {
 		switch (event.data.retData) {
 			case 'users_list':
-				this.props.usr.users = [];
 				const user_id = getCookie('userID')
 				event.data.list.map(name => {
 					const u = name.user_id
@@ -66,26 +84,26 @@ class Sidebar extends PureComponent {
 		}
 	}
 
-	componentDidMount() {
-		let userId = getCookie('userID');
+	// componentDidMount() {
+	// 	let userId = getCookie('userID');
 
-		let req1 = {
-			userId: userId,
-			reqData: 'users_list'
-		}
+	// 	let req1 = {
+	// 		userId: userId,
+	// 		reqData: 'users_list'
+	// 	}
 
-		this.state.worker.then((worker) => {
-			worker.port.postMessage(req1);
-		});
+	// 	this.state.worker.then((worker) => {
+	// 		worker.port.postMessage(req1);
+	// 	});
 
-		let req2 = {
-			userId: userId,
-			reqData: 'chats_list'
-		}
-		this.state.worker.then((worker) => {
-			worker.port.postMessage(req2);
-		});
-	};
+	// 	let req2 = {
+	// 		userId: userId,
+	// 		reqData: 'chats_list'
+	// 	}
+	// 	this.state.worker.then((worker) => {
+	// 		worker.port.postMessage(req2);
+	// 	});
+	// };
 
 
 	handleChange(event) {
@@ -137,11 +155,10 @@ class Sidebar extends PureComponent {
 			                </Link>
 			        ))
 		        :
-			    	this.props.usr.users.map(user => (
+			    	this.props.usr.get('users').map(user => (
 			                <Link key={user.userId} to={'/users/user_id=' + (user.userId)}>
 				                <SidebarComponent path={this.props.location.pathname.split('=')} id = {user.userId}
 				                    {...user}
-				                
 				                />
 			                </Link>
 			        ))
@@ -162,8 +179,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
     return {
-        usr: state.usr.toJS(),
-        cht: state.cht.toJS()
+        usr: state.usr,
+        cht: state.cht
     }
 };
 

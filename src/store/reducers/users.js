@@ -1,9 +1,14 @@
 import * as actionTypes from '../actions/actionTypes';
-import { List, Map, toJS } from 'immutable';
+import { List, Map } from 'immutable';
 
 const initialState = Map({
     users: List(),
-    currentUser: [] 
+    currentUser: Map({
+        id: 0,
+        userName: undefined,
+        avatar: undefined,
+        isAuthorized: undefined
+    }) 
 })
 
 
@@ -20,7 +25,7 @@ const users = (state = initialState, action) => {
 const currentUser = (state = initialState, action) => {
     switch (action.type) {
         case 'CURRENT_USER':
-            return state.update('currentUser', (currentUser) => action.payload);
+            return state.update('currentUser', (currentUser) => currentUser.update('avatar', avatar => action.payload.avatar));
         default:
             return state;
     }

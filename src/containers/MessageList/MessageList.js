@@ -147,14 +147,12 @@ class MessageList extends PureComponent {
 const mapStateToProps = state => {
     return {
         msg: state.msg,
-        currentUsr: state.usr.currentUser
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return  {
     	AddMessage: (id, message, author, chatId, filename, url, date) => dispatch(actions.addMessage(id, message, author, chatId, filename, url, date)),
-        currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized)),
     	RemoveMessage: () => dispatch(actions.removeMessage()),
     }
 };

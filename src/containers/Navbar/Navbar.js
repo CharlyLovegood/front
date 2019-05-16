@@ -62,8 +62,8 @@ class Navbar extends PureComponent {
     }
 
     render() {
-        let avatarLabelURL = this.props.usr.currentUser.avatar;
-        if (this.props.usr.currentUser.avatar == undefined) {
+        let avatarLabelURL = this.props.usr.get('currentUser').get('avatar');
+        if (this.props.usr.get('currentUser').get('avatar') == undefined) {
             avatarLabelURL = require('../../icons/user7.png');
         }
         return (
@@ -72,7 +72,7 @@ class Navbar extends PureComponent {
                     <img alt='avatar' className={styles.avatar} src={avatarLabelURL} />
                     <div className={styles.phrase}>
                         <p className={styles.string}>Hello!</p>
-                        <p className={styles.string}>{this.props.usr.currentUser.userName}</p>
+                        <p className={styles.string}>{this.props.usr.get('currentUser').get('userName')}</p>
                     </div>
                 </div>
                 <div className={styles.logo_container}>
@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
     return {
-        usr: state.usr.toJS()
+        usr: state.usr
     }
 };
 

@@ -22,7 +22,7 @@ class SentryErrorLogger extends React.Component {
 	render() {
 		if (this.state.error) {
 			return(
-				<a onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>Report feedback</a>
+				<p onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>Report feedback</p>
 			)
 		} else {
 			return (<p/>);

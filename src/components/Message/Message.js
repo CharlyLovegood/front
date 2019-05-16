@@ -40,8 +40,7 @@ class Message extends PureComponent {
 						return response.json();
 					})
 					.then(data => {
-						console.log(data);
-						if (data.error == undefined) {
+						if (!data.error) {
 							this.setState({ogImg: data.result.image});
 							this.setState({ogDesc: data.result.desc});
 							this.setState({ogTitle: data.result.title});
@@ -54,7 +53,7 @@ class Message extends PureComponent {
 	}
 
 	render() {
-		if (this.state.linkPreview == true & this.state.statusCode === 200) {
+		if (this.state.linkPreview == true && this.state.statusCode === 200) {
 			return (
 				<div className={styles[this.props.author]}>
 					<i>{this.props.author}</i> <i className={styles.date}>{this.props.date}</i>
