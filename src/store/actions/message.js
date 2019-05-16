@@ -17,14 +17,6 @@ export const addMessage = (id, message, author, chatId, filename, url, date) => 
 })
 
 
-export const addEmoji = (emojiCode) => ({
-    type: types.EMOJI,
-    payload: {
-        emojiCode
-    }
-})
-
-
 export const removeMessage = () => ({
     type: types.REMOVE_MESSAGE,
     payload: {

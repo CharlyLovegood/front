@@ -13,7 +13,6 @@ export const USERS_LIST = 'USERS_LIST'
 export const CURRENT_USER = 'CURRENT_USER'
 
 export const CHAT_LIST = 'CHAT_LIST'
-export const EMOJI = 'EMOJI'
 
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE'
 export const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER'

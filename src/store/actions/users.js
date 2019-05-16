@@ -1,12 +1,13 @@
 import * as types from './actionTypes'
+import { Map } from 'immutable';
 
 
 export const usersList = (userId, name) => ({
     type: types.USERS_LIST,
-    payload: {
+    payload: Map({
         userId,
         name
-    }
+    })
 })
 
 

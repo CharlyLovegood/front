@@ -25,7 +25,7 @@ const users = (state = initialState, action) => {
 const currentUser = (state = initialState, action) => {
     switch (action.type) {
         case 'CURRENT_USER':
-            return state.update('currentUser', (currentUser) => currentUser.update('avatar', avatar => action.payload.avatar));
+            return state.update('currentUser', (currentUser) => currentUser.update('avatar', avatar => action.payload.avatar)).update('id', id => action.payload.id);
         default:
             return state;
     }

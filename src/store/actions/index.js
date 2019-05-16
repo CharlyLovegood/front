@@ -1,5 +1,4 @@
 export {
-	addEmoji,
 	removeMessage,
 	addMessage,
 	messageReceived
