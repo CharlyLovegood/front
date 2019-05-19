@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import Centrifuge from 'centrifuge';
 
 import {getCookie} from '../cookie'
 
-class CentrifugeClass extends Component {
+class CentrifugeClass extends PureComponent {
 	componentDidMount() {
 		console.log(this.props.match.params.num);
 		const token = getCookie('token');

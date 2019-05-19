@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { PureComponent} from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import MessageList from './containers/MessageList/MessageList';
 import AddMessage from './containers/AddMessage/AddMessage';
@@ -8,7 +8,7 @@ import Centrifuge from './containers/Centrifuge/Centrifuge';
 import Profile from './containers/Profile/Profile';
 import AuthWindow from './containers/AuthWindow/AuthWindow';
 import RegWindow from './containers/RegWindow/RegWindow';
-
+import SentryErrorLogger from './containers/SentryErrorLogger/SentryErrorLogger'
 
 import {connect} from 'react-redux';
 import * as actions from './store/actions';
@@ -50,7 +50,7 @@ initializePush();
 
 
 
-class App extends Component {
+class App extends PureComponent {
     render() {
         var userId = getCookie('userID');
         if (userId === undefined) { 
@@ -78,6 +78,7 @@ class App extends Component {
                                     <Route path='/chats/chat_id=:chat_id' component={AddMessage} />
                                 </div>
                             </main>
+                            <SentryErrorLogger />
                         </div>
                     </Route>      
                 </Router>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
 import { Link } from 'react-router-dom';
@@ -12,17 +12,33 @@ import workerCode from '../sharedWorker';
 
 import {getCookie} from '../cookie'
 
-
-class Sidebar extends Component {
+class Sidebar extends PureComponent {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 		    value: '',
-		    chats: [],
-		    users: [],
 		    worker: this.getSharedWorker()
 		};
+
+		let userId = getCookie('userID');
+
+		let req1 = {
+			userId: userId,
+			reqData: 'users_list'
+		}
+
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req1);
+		});
+
+		let req2 = {
+			userId: userId,
+			reqData: 'chats_list'
+		}
+		this.state.worker.then((worker) => {
+			worker.port.postMessage(req2);
+		});
 	};
 
 	getSharedWorker () {
@@ -46,8 +62,6 @@ class Sidebar extends Component {
 	onWorkerList (event) {
 		switch (event.data.retData) {
 			case 'users_list':
-				this.props.usr.users = [];
-
 				const user_id = getCookie('userID')
 				event.data.list.map(name => {
 					const u = name.user_id
@@ -55,19 +69,14 @@ class Sidebar extends Component {
 						this.props.usersList(name.user_id, name.nick)
 					}
 				})
-				this.setState({users: this.props.usr.users});
 				break;
 			case 'chats_list':
-				this.props.cht.chats = [];
 				event.data.list.map(dat => this.props.chatsList(dat.chat_id, dat.topic));
 				break;
 			case 'found_users':
-				this.props.usr.users = [];
 				event.data.list.result.map(data => this.props.usersList(data._source.user_id, data._source.nick));
-				// this.setState({users: this.props.usr.users});
 				break;
 			case 'found_chats':
-				this.props.cht.chats = [];
 				event.data.list.result.map(dat => this.props.chatsList(dat._source.chat_id, dat._source.topic));
 				break;
 			default:
@@ -75,26 +84,26 @@ class Sidebar extends Component {
 		}
 	}
 
-	componentDidMount() {
-		let userId = getCookie('userID');
+	// componentDidMount() {
+	// 	let userId = getCookie('userID');
 
-		let req1 = {
-			userId: userId,
-			reqData: 'users_list'
-		}
+	// 	let req1 = {
+	// 		userId: userId,
+	// 		reqData: 'users_list'
+	// 	}
 
-		this.state.worker.then((worker) => {
-			worker.port.postMessage(req1);
-		});
+	// 	this.state.worker.then((worker) => {
+	// 		worker.port.postMessage(req1);
+	// 	});
 
-		let req2 = {
-			userId: userId,
-			reqData: 'chats_list'
-		}
-		this.state.worker.then((worker) => {
-			worker.port.postMessage(req2);
-		});
-	};
+	// 	let req2 = {
+	// 		userId: userId,
+	// 		reqData: 'chats_list'
+	// 	}
+	// 	this.state.worker.then((worker) => {
+	// 		worker.port.postMessage(req2);
+	// 	});
+	// };
 
 
 	handleChange(event) {
@@ -138,7 +147,7 @@ class Sidebar extends Component {
 		    	<SearchField handleSubmit={(event) => this.handleSubmit(event)} handleChange={(event) => this.handleChange(event)} value={this.state.value}/>
 
 		    	{(this.props.match.params.view === 'chats' || this.props.match.params.view === '') ? 
-			    	this.props.cht.chats.map(chat => (
+			    	this.props.cht.map(chat => (
 			                <Link key={chat.id} to={'/chats/chat_id=' + (chat.id)}>
 				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.id}
 				                    {...chat}
@@ -146,11 +155,10 @@ class Sidebar extends Component {
 			                </Link>
 			        ))
 		        :
-			    	this.props.usr.users.map(user => (
+			    	this.props.usr.get('users').map(user => (
 			                <Link key={user.userId} to={'/users/user_id=' + (user.userId)}>
 				                <SidebarComponent path={this.props.location.pathname.split('=')} id = {user.userId}
 				                    {...user}
-				                
 				                />
 			                </Link>
 			        ))

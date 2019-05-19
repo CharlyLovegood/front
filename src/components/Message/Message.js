@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import styles from './styles.module.css';
 
 
-class Message extends Component {
+class Message extends PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -11,7 +11,8 @@ class Message extends Component {
 			link: this.props.linkPreview[1],
 		    ogImg: undefined,
 		    ogTitle: undefined,
-		    ogDesc: undefined
+		    ogDesc: undefined,
+		    statusCode: 200
 		};
 	}
 
@@ -34,22 +35,25 @@ class Message extends Component {
 					'Content-Type': 'application/json',
 				},
 			};
-			var newtxt;
 			fetch('http://127.0.0.1:5000/api',request)
 					.then(function(response)  {
 						return response.json();
 					})
 					.then(data => {
-						console.log(data);
-						this.setState({ogImg: data.result.image});
-						this.setState({ogDesc: data.result.desc});
-						this.setState({ogTitle: data.result.title});
+						if (!data.error) {
+							this.setState({ogImg: data.result.image});
+							this.setState({ogDesc: data.result.desc});
+							this.setState({ogTitle: data.result.title});
+						}
+						else {
+							this.setState({statusCode: 500});
+						}
 					});
 		}
 	}
 
 	render() {
-		if (this.state.linkPreview == true) {
+		if (this.state.linkPreview == true && this.state.statusCode === 200) {
 			return (
 				<div className={styles[this.props.author]}>
 					<i>{this.props.author}</i> <i className={styles.date}>{this.props.date}</i>

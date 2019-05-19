@@ -7,35 +7,6 @@ export default ((self) => {
 			let data;
 			let request;
 			switch (event.data.reqData) {
-				case 'service_viewer':
-					data = {
-							jsonrpc: '2.0', 
-							method: 'service_viewer', 
-							params: {'url': event.data.url}, 
-							id: '1'
-					};
-
-					request = {
-					    method: 'POST',
-					    body: JSON.stringify(data),
-					    headers: {
-							'Access-Control-Allow-Origin':'*',
-							'Content-Type': 'application/json',
-						},
-					};
-
-					fetch('http://127.0.0.1:5000/api',request)
-							.then(function(response)  {
-								return response.json();
-							})
-							.then(data => {
-								let answ = {
-									retData: 'service_outcome',
-									list: data
-								};
-								port.postMessage(answ);
-							})	
-					break;
 				case 'search_users':
 					data = {
 							jsonrpc: '2.0', 
@@ -124,14 +95,14 @@ export default ((self) => {
 							})	
 					break;				
 				case 'create_user':
-data = {
+					data = {
 							jsonrpc: '2.0', 
 							method: 'create_user', 
 							params: {'nick': event.data.nick, 'name': event.data.name, 'email': event.data.email, 'password': event.data.password}, 
 							id: '1'
 					};
 
-request = {
+					request = {
 					    method: 'POST',
 					    body: JSON.stringify(data),
 					    headers: {
@@ -153,14 +124,14 @@ request = {
 							})	
 					break;
 				case 'get_current_user_info':
-data = {
+				data = {
 							jsonrpc: '2.0', 
 							method: 'get_user_info', 
 							params: {'user_id': event.data.userId}, 
 							id: '1'
 					};
 
-request = {
+				request = {
 					    method: 'POST',
 					    body: JSON.stringify(data),
 					    headers: {
@@ -269,14 +240,14 @@ request = {
 							})	
 					break;					
 				case 'get_user_info':
-data = {
+				data = {
 							jsonrpc: '2.0', 
 							method: 'get_user_info', 
 							params: {'user_id': event.data.userId}, 
 							id: '1'
 					};
 
-request = {
+				request = {
 					    method: 'POST',
 					    body: JSON.stringify(data),
 					    headers: {

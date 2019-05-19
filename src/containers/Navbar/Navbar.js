@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import {getCookie} from '../cookie'
 import {deleteCookie} from '../cookie'
 
 
-class Navbar extends Component {
+class Navbar extends PureComponent {
     state = {
         value: '',
         worker: this.getSharedWorker()
@@ -37,7 +37,6 @@ class Navbar extends Component {
     onWorkerList (event) {
         switch (event.data.retData) {
             case 'current_user_info':
-                console.log('usrt')
                 this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true);
                 break;
             default:
@@ -63,8 +62,8 @@ class Navbar extends Component {
     }
 
     render() {
-        let avatarLabelURL = this.props.usr.currentUser.avatar;
-        if (this.props.usr.currentUser.avatar == undefined) {
+        let avatarLabelURL = this.props.usr.get('currentUser').get('avatar');
+        if (this.props.usr.get('currentUser').get('avatar') == undefined) {
             avatarLabelURL = require('../../icons/user7.png');
         }
         return (
@@ -73,7 +72,7 @@ class Navbar extends Component {
                     <img alt='avatar' className={styles.avatar} src={avatarLabelURL} />
                     <div className={styles.phrase}>
                         <p className={styles.string}>Hello!</p>
-                        <p className={styles.string}>{this.props.usr.currentUser.userName}</p>
+                        <p className={styles.string}>{this.props.usr.get('currentUser').get('userName')}</p>
                     </div>
                 </div>
                 <div className={styles.logo_container}>
