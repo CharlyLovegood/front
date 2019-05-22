@@ -73,10 +73,12 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "3.6.3"
   },
+  "name": "2018-FS-11-Frontend-Ivanova",
+  "homepage": "https://charlylovegood.github.io/2018-FS-11-Frontend-Ivanova/",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
+    "test": "CI=true node scripts/test.js",
     "test:coverage": "node scripts/test.js --coverage"
   },
   "eslintConfig": {
