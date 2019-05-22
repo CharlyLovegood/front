@@ -1,0 +1,37 @@
+.authcontainer {
+    align-items: center;
+    display: flex;
+    margin: 50px 0px;
+    font-size: 26px;
+    flex-direction: column;
+
+    border-style: solid;
+    padding: 30px 20px 70px 20px;
+    border-width: 2px;
+    border-color: #c3b8c4;
+    width: 40%;
+    align-self: center;
+    max-width: 500px;
+}
+
+.button {
+    border-radius: 5px;
+    font-size: 24px;
+    margin: 0px 10px;
+    padding: 10px 20px;
+    background: #856aad;
+    color: white;
+}
+
+.google_button {
+    border-radius: 50%;
+    font-size: 30px;
+    margin: 10px 10px;
+    padding: 18px 20px;
+    background: #ff2d00;
+    color: white;
+}
+
+.link {
+    color: #856aad;
+}

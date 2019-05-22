@@ -1,0 +1,11 @@
+.sidebar {
+	display: flex;
+    flex-basis: 30%;
+    background: rgb(133,103,172);
+    background: radial-gradient(circle, rgba(133,103,172,1) 0%, rgba(132,106,172,1) 46%, rgba(84,67,158,1) 98%);
+    /* background-image: url(../../icons/minimalizm-gradient-background.jpg); */
+    background-position: center;
+    flex-direction: column;
+    padding: 0px 20px;
+    color: white;
+}

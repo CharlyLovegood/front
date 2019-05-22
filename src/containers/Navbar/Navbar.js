@@ -1,88 +1,103 @@
-import React, { Component } from 'react';
-// import  from './../../components/Avatar/Avatar';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
-import * as actions from '../../store/actions'
+import * as actions from '../../store/actions';
 import { Link } from 'react-router-dom';
 
+import styles from './styles.module.css';
+import workerCode from '../sharedWorker';
+
+import {getCookie} from '../cookie'
+import {deleteCookie} from '../cookie'
 
 
-function setCookie(name, value, options) {
-  options = options || {};
+class Navbar extends PureComponent {
+    state = {
+        value: '',
+        worker: this.getSharedWorker()
+    };
 
-  var expires = options.expires;
-
-  if (typeof expires == "number" && expires) {
-    var d = new Date();
-    d.setTime(d.getTime() + expires * 1000);
-    expires = options.expires = d;
-  }
-  if (expires && expires.toUTCString) {
-    options.expires = expires.toUTCString();
-  }
-
-  value = encodeURIComponent(value);
-
-  var updatedCookie = name + "=" + value;
-
-  for (var propName in options) {
-    updatedCookie += "; " + propName;
-    var propValue = options[propName];
-    if (propValue !== true) {
-      updatedCookie += "=" + propValue;
+    getSharedWorker () {
+        const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+        return new Promise((res, rej) => {
+            const reader = new FileReader();
+            reader.addEventListener('loadend', (event) => {
+                const worker = new SharedWorker(event.target.result);
+                worker.port.addEventListener('message', this.onWorkerList.bind(this));
+                worker.port.start();
+                window.addEventListener('beforeunload', () => {
+                    worker.port.postMessage('disconnect');
+                });
+                res(worker);
+            });
+            reader.addEventListener('error', rej);
+            reader.readAsDataURL(workerFile);
+        });
     }
-  }
 
-  document.cookie = updatedCookie;
-}
+    onWorkerList (event) {
+        switch (event.data.retData) {
+            case 'current_user_info':
+                this.props.currentUser(event.data.user_id, event.data.list.name, event.data.list.avatar, true);
+                break;
+            default:
+                break;
+        }
+    }
 
-function deleteCookie(name) {
-  setCookie(name, "", {
-    expires: -1
-  })
-}
+    componentDidMount() {
+        let req = {
+            userId: getCookie('userID'),
+            reqData: 'get_current_user_info'
+        }
+        this.state.worker.then((worker) => {
+            worker.port.postMessage(req);
+        });     
+    }   
 
+    logOut(event){
+        deleteCookie('token');
+        deleteCookie('userID');
+        this.props.removeCurrentUser();
+        this.props.history.push('/login');
+    }
 
-class Navbar extends Component {
-  state = {
-    value: ''
-  };
-
-  logOut(event){
-    deleteCookie('token');
-    deleteCookie('userID');
-  }
-
-
-  render() {
-    return (
-      <nav id="navbar" className="navbar">
-        <img alt="" className="avatar" src="https://mycs.net.au/wp-content/uploads/2016/03/person-icon-flat.png" />
-        <p></p>
-        <p>{this.props.usr.currentUser.userName}</p>
-          <div className="dropdown-menu">
-            <img alt="" className="menu-label" src="https://cdn0.iconfinder.com/data/icons/web-kit/100/Web-18-512.png" />
-            <div className="menu-list">
-              <Link to='/chats'>Chats</Link>
-              <Link to='/users'>Users</Link>
-              <Link to='/' onClick={(event) => this.logOut(event)}>Log Out</Link>
-            </div>
-          </div>
-      </nav>
-    );
-  };
+    render() {
+        let avatarLabelURL = this.props.usr.get('currentUser').get('avatar');
+        if (this.props.usr.get('currentUser').get('avatar') == undefined) {
+            avatarLabelURL = require('../../icons/user7.png');
+        }
+        return (
+            <nav className={styles.navbar}>
+                <div className={styles.user}>
+                    <img alt='avatar' className={styles.avatar} src={avatarLabelURL} />
+                    <div className={styles.phrase}>
+                        <p className={styles.string}>Hello!</p>
+                        <p className={styles.string}>{this.props.usr.get('currentUser').get('userName')}</p>
+                    </div>
+                </div>
+                <div className={styles.logo_container}>
+                    <img alt='logo' className={styles.logo} src='https://cdn.dribbble.com/users/469578/screenshots/2461278/cut-sling.gif'/>
+                </div>
+                <div className={styles.log_out}>
+                    <Link className={styles.log_out} to='/login' onClick={(event) => this.logOut(event)}>Log Out</Link>
+                </div>
+            </nav>
+        );
+    };
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return  {
-    usersList: (userId, name) => dispatch(actions.currentUser()),
-    currentUser: (userId, userName, isAuthorized) => dispatch(actions.currentUser(userId, userName, isAuthorized))
-  }
+    return    {
+        usersList: (userId, name) => dispatch(actions.currentUser()),
+        currentUser: (userId, userName, avatar, isAuthorized) => dispatch(actions.currentUser(userId, userName, avatar, isAuthorized)),
+        removeCurrentUser: () => dispatch(actions.removeCurrentUser()),
+    }
 };
 
 const mapStateToProps = state => {
-  return {
-    usr: state.usr
-  }
+    return {
+        usr: state.usr
+    }
 };
 
 

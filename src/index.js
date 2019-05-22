@@ -12,17 +12,16 @@ import chatReducer from './store/reducers/chat';
 import thunk from 'redux-thunk';
 
 
-
 const rootReducer = combineReducers({
-  msg: messageReducer,
-  usr: usersReducer,
-  cht: chatReducer 
+    msg: messageReducer,
+    usr: usersReducer,
+    cht: chatReducer 
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancers(
-  applyMiddleware(thunk)
+    applyMiddleware(thunk)
 ));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));

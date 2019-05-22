@@ -1,0 +1,74 @@
+.Me{
+    background: #d4c4ea;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-self: flex-end;
+    max-width: 70%;
+    flex-direction: column;
+    position: relative;
+    min-width: 40%;
+    border-radius: 10px 10px 0px 10px;
+    animation: appear 2s;
+}
+
+.ForMe{
+    background: #b39abd40;
+    padding: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+    max-width: 70%;
+    flex-direction: column;
+    position: relative;
+    min-width: 40%;
+    border-radius: 10px 10px 10px 0px;
+    animation: appear 1s;
+}
+
+.date {
+    font-size: 12px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.emoji_message {
+    display: flex;
+    /* justify-content: center; */
+    align-items: flex-end;
+}
+
+.text_container {
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.ogImg {
+    height: 200px;
+}
+
+.ogTitle {
+    margin: 0px 10px;
+}
+
+.ogDesc {
+    margin: 10px 10px;
+}
+
+.img {
+    width: 100%;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        pacity: 1;
+    }
+}

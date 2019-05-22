@@ -1,0 +1,12 @@
+.profile {
+    align-items: center;
+    display: flex;
+    margin: 50px 0px;
+    font-size: 26px;
+    flex-direction: column;
+}
+
+.avatar {
+    width: 300px;
+    margin: 11px;
+}

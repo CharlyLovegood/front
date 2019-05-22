@@ -1,0 +1,28 @@
+.menu_bar {
+    margin: 0px;
+    display: flex;
+    padding: 5px;
+    justify-content: space-around;
+}
+
+.menu_label {
+	opacity: 0.4;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+    transition: opacity 0.5s;
+}
+
+.menu_label:hover {
+	opacity: 1;
+	padding: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.menu_label:active {
+    opacity: 1;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+}

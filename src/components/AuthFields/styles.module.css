@@ -1,0 +1,28 @@
+.profile_create_chat {
+    display: flex;
+    align-items: center;
+    justify-content: column;
+    flex-direction: column;
+    padding: 20px;
+    width: 95%;
+}
+
+.input {
+    padding: 10px 10px 2px 10px;
+    font-size: 24px;
+    margin: 20px 0px;
+    border-width: 0px 0px 1px 0px;
+    border-color: #b39abd;
+    border-style: solid;
+    width: 100%;
+    max-width: 400px;
+}
+
+.button {
+    border-radius: 5px;
+    font-size: 24px;
+    margin: 0px 10px;
+    padding: 10px 20px;
+    background: #856aad;
+    color: white;
+}

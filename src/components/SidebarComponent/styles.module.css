@@ -1,0 +1,40 @@
+.SidebarComponent {
+    display: flex;
+    padding: 30px 10px;
+    text-decoration: none;
+    color: #f5f4f3;
+    border-width: 0px 0px 1px 0px;
+    border-color: #e9e5ed42;
+    border-style: solid;
+}
+
+.SidebarComponent_active {
+    display: flex;
+    padding: 30px 30px;
+    text-decoration: none;
+    color: #f5f4f3;
+    border-width: 0px 0px 1px 0px;
+    border-color: #e9e5ed42;
+    border-style: solid;
+    /* background-color: #7d53531f; */
+    margin: 0px -20px;
+}
+
+.triangle{
+	width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 25px 20px 0;
+    border-color: transparent #ffffff transparent transparent;
+    top: 15px;
+    right: -20px;
+    position: absolute;
+}
+
+
+.triangle_none{
+}
+
+.container {
+	position: relative;
+}

@@ -1,22 +1,15 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions'
-import jwt from 'jsonwebtoken';
 import Centrifuge from 'centrifuge';
 
-function getCookie(name) {
-  var matches = document.cookie.match(new RegExp(
-      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-};
+import {getCookie} from '../cookie'
 
-
-class CentrifugeClass extends Component {
+class CentrifugeClass extends PureComponent {
 	componentDidMount() {
 		console.log(this.props.match.params.num);
 		const token = getCookie('token');
-		var chanel = this.props.match.params.num;
+		let chanel = this.props.match.params.num;
 		
 		const centrifuge = new Centrifuge('ws://localhost:8000/connection/websocket');
 		centrifuge.setToken(token);
@@ -33,11 +26,10 @@ class CentrifugeClass extends Component {
 	}	
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (this.props.match.params.num != prevProps.match.params.num) {
-			
+		if (this.props.match.params.num !== prevProps.match.params.num) {
 			console.log(this.props.match.params.num);
 			const token = getCookie('token');
-			var chanel = this.props.match.params.num;
+			let chanel = this.props.match.params.num;
 
 			const centrifuge = new Centrifuge('ws://localhost:8000/connection/websocket');
 			centrifuge.setToken(token);
@@ -72,7 +64,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
   return {
-    
+    currentUsr: state.usr.currentUser,
   }
 };
 

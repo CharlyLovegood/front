@@ -1,0 +1,3 @@
+CURL REQUES TO CHECK PUSH notifications
+
+curl -X POST -H "Authorization:key=AAAAXo6yJcI:APA91bEjCkyFAgUPcLwZrFLtjuPXY2QriiYPo0oKLaSVECllZEMc-vT68QEhWzO5ENcE1-TBcXRYv9FVDqQrPrIs8nC-Lu8ywelSP9D1skQt5i8aFDVIRtDBbrFJqr_D24-QCu1oS2LH" -H "Content-Type: application/json" -d '{"notification": {"title": "Firebase","body": "Grouncontrol from","click_action": "http://localhost:3000/","icon": "http://url-to-an-icon/icon.png"},"to": "eesIscaoA8g:APA91bGRtkqnsbJH_dChQLmeT9uRGXD_omARrv4oC5QVOiRnu7toRj-vYuivFhlpXHkiQZe0AqzGeRyCqvHUV9WPuiP1pHjVS1MErxckvM1xQJofcGXob4dCUh41K_nqCfxaHq3AZLRV"}' https://fcm.googleapis.com/fcm/send
