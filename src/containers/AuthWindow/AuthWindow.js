@@ -40,7 +40,7 @@ class AuthWindow extends PureComponent {
     onWorkerList (event) {
         switch (event.data.retData) {
             case 'user_handle_login':
-                if (event.data.list.result.user_id != undefined){
+                if (event.data.list.result.user_id !== undefined){
                     this.props.currentUser(event.data.list.result.user_id, 'test', null, true);
                     setCookie('userID', event.data.list.result.user_id);
                     setCookie('token', event.data.list.result.token);

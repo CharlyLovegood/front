@@ -48,7 +48,7 @@ class MessageList extends PureComponent {
 		if (event.data.retData === 'messages_list') {
 			event.data.list.map(mes => {
 				let reciever = '';
-				mes.author == getCookie('userID') ? reciever = 'Me' : reciever = 'ForMe';
+				Number(mes.author) === Number(getCookie('userID')) ? reciever = 'Me' : reciever = 'ForMe';
 				this.props.AddMessage(mes.message_id, mes.content, reciever, this.props.match.params.chat_id, null, null, mes.added_at)
 			});
 		}

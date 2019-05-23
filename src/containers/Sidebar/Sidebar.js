@@ -65,7 +65,7 @@ class Sidebar extends PureComponent {
 				const user_id = getCookie('userID')
 				event.data.list.map(name => {
 					const u = name.user_id
-					if (u != user_id) {
+					if (Number(u) !== Number(user_id)) {
 						this.props.usersList(name.user_id, name.nick)
 					}
 				})
@@ -83,28 +83,6 @@ class Sidebar extends PureComponent {
 				break;
 		}
 	}
-
-	// componentDidMount() {
-	// 	let userId = getCookie('userID');
-
-	// 	let req1 = {
-	// 		userId: userId,
-	// 		reqData: 'users_list'
-	// 	}
-
-	// 	this.state.worker.then((worker) => {
-	// 		worker.port.postMessage(req1);
-	// 	});
-
-	// 	let req2 = {
-	// 		userId: userId,
-	// 		reqData: 'chats_list'
-	// 	}
-	// 	this.state.worker.then((worker) => {
-	// 		worker.port.postMessage(req2);
-	// 	});
-	// };
-
 
 	handleChange(event) {
 		this.setState({value: event.target.value});
@@ -148,17 +126,17 @@ class Sidebar extends PureComponent {
 
 		    	{(this.props.match.params.view === 'chats' || this.props.match.params.view === '') ? 
 			    	this.props.cht.map(chat => (
-			                <Link key={chat.id} to={'/chats/chat_id=' + (chat.id)}>
-				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.id}
-				                    {...chat}
+			                <Link key={chat.get('id')} to={'/chats/chat_id=' + (chat.get('id'))}>
+				                <SidebarComponent onClick={this.activeItem} path={this.props.location.pathname.split('=')} id = {chat.get('id')}
+				                    topic={chat.get('topic')}
 				                />
 			                </Link>
 			        ))
 		        :
 			    	this.props.usr.get('users').map(user => (
-			                <Link key={user.userId} to={'/users/user_id=' + (user.userId)}>
-				                <SidebarComponent path={this.props.location.pathname.split('=')} id = {user.userId}
-				                    {...user}
+			                <Link key={user.get('userId')} to={'/users/user_id=' + (user.get('userId'))}>
+				                <SidebarComponent path={this.props.location.pathname.split('=')} id = {user.get('userId')}
+				                    name={user.get('name')}
 				                />
 			                </Link>
 			        ))

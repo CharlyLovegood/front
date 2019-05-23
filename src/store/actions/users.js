@@ -1,12 +1,12 @@
 import * as types from './actionTypes'
-
+import { fromJS } from 'immutable';
 
 export const usersList = (userId, name) => ({
     type: types.USERS_LIST,
-    payload: {
+    payload: fromJS({
         userId,
         name
-    }
+    })
 })
 
 

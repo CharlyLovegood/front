@@ -63,7 +63,7 @@ class Navbar extends PureComponent {
 
     render() {
         let avatarLabelURL = this.props.usr.get('currentUser').get('avatar');
-        if (this.props.usr.get('currentUser').get('avatar') == undefined) {
+        if (this.props.usr.get('currentUser').get('avatar') === undefined) {
             avatarLabelURL = require('../../icons/user7.png');
         }
         return (

@@ -17,7 +17,7 @@ class Message extends PureComponent {
 	}
 
 	componentDidMount() {
-		if (this.state.linkPreview == true) {
+		if (Boolean(this.state.linkPreview) === true) {
 			let url = this.state.link;
 
 			var data = {
@@ -53,7 +53,7 @@ class Message extends PureComponent {
 	}
 
 	render() {
-		if (this.state.linkPreview == true && this.state.statusCode === 200) {
+		if (Boolean(this.state.linkPreview) === true && this.state.statusCode === 200) {
 			return (
 				<div className={styles[this.props.author]}>
 					<i>{this.props.author}</i> <i className={styles.date}>{this.props.date}</i>

@@ -6,7 +6,7 @@ function SidebarComponent(props) {
 	const [style, setStyle] = useState(styles.triangle_none);
 	useEffect(() => {
 		setStyle(styles.triangle_none);
-		if (props.path[1] == props.id) {
+		if (Number(props.path[1]) === Number(props.id)) {
 			setStyle(styles.triangle);
 		}
 	}, props.path[1]);
